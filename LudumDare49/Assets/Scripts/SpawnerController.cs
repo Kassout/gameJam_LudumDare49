@@ -25,7 +25,6 @@ public class SpawnerController : MonoBehaviour
     }
 
     private Vector2 _direction;
-    private float _lastSpawnTime = 0.0f;
     
     // Start is called before the first frame update
     void Start()
