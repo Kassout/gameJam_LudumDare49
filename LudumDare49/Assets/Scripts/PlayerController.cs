@@ -5,11 +5,17 @@ public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
-	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
-	[SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
-	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
+	[SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
+    [SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
+	[SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
+    public float runSpeed = 40f;
+    float horizontalMove = 0f;
+    private float JumpTimeCounter;
+    public float JumpTime;
+    public bool isJumping;
+    public float jumpBoost;
 
-	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+    const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
@@ -31,9 +37,31 @@ public class PlayerController : MonoBehaviour
 			OnLandEvent = new UnityEvent();
 	}
 
-	private void FixedUpdate()
+    private void Update()
+    {
+        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+
+        if (m_Grounded)
+        {
+            if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W))
+            {
+                m_Grounded = false;
+                m_Rigidbody2D.AddForce(Vector2.up * m_JumpForce);
+                isJumping = true;
+            }
+            else
+            {
+                isJumping = false;
+                JumpTimeCounter = JumpTime;
+            }
+        }
+    }
+
+    private void FixedUpdate()
 	{
-		bool wasGrounded = m_Grounded;
+        Move(horizontalMove * Time.fixedDeltaTime);
+
+        bool wasGrounded = m_Grounded;
 		m_Grounded = false;
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -51,7 +79,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 
-	public void Move(float move, bool jump)
+	public void Move(float move)
 	{
 
 		//only control the player if grounded or airControl is turned on
@@ -75,13 +103,19 @@ public class PlayerController : MonoBehaviour
 				Flip();
 			}
 		}
-		// If the player should jump...
-		if (m_Grounded && jump)
-		{
-			// Add a vertical force to the player.
-			m_Grounded = false;
-			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-		}
+		// If the player should continue to jump...
+        if (Input.GetButton("Jump") || Input.GetKey(KeyCode.W) && isJumping)
+        {
+            if (JumpTimeCounter > 0)
+            {
+                m_Rigidbody2D.velocity += Vector2.up * jumpBoost;
+                JumpTimeCounter -= Time.deltaTime;
+            }
+            else
+            {
+                isJumping = false;
+            }
+        }
 	}
 
 
