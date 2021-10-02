@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
+	private Animator playerAnimator;
 
 	[Header("Events")]
 	[Space]
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+		playerAnimator = GetComponent<Animator>();
 
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
@@ -59,10 +61,19 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
 	{
+		if (horizontalMove != 0 && m_Grounded)
+		{
+			playerAnimator.SetBool("isWalking", true);
+		}
+		else if (!m_Grounded || horizontalMove == 0 || isJumping)
+		{
+			playerAnimator.SetBool("isWalking", false);
+		}
         Move(horizontalMove * Time.fixedDeltaTime);
 
         bool wasGrounded = m_Grounded;
 		m_Grounded = false;
+		playerAnimator.SetBool("isGrounded", m_Grounded);
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
@@ -72,6 +83,7 @@ public class PlayerController : MonoBehaviour
 			if (colliders[i].gameObject != gameObject)
 			{
 				m_Grounded = true;
+				playerAnimator.SetBool("isGrounded", m_Grounded);
 				if (!wasGrounded)
 					OnLandEvent.Invoke();
 			}
@@ -103,6 +115,7 @@ public class PlayerController : MonoBehaviour
 				Flip();
 			}
 		}
+		
 		// If the player should continue to jump...
         if (Input.GetButton("Jump") || Input.GetKey(KeyCode.W) && isJumping)
         {
