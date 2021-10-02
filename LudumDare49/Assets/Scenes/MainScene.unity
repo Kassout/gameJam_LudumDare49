@@ -1335,6 +1335,7 @@ GameObject:
   - component: {fileID: 206976295}
   - component: {fileID: 206976297}
   - component: {fileID: 206976296}
+  - component: {fileID: 206976298}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -1394,7 +1395,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 00000
+  m_Text: 0
 --- !u!222 &206976297
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1403,6 +1404,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 206976294}
   m_CullTransparentMesh: 1
+--- !u!114 &206976298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206976294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b250b9e15990c04488c551091a80b984, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreDelay: 5
+  scoreIncrement: 10
+  timeUntilScoreIncrementIncrease: 30
 --- !u!1 &227847617
 GameObject:
   m_ObjectHideFlags: 0
@@ -7009,7 +7025,10 @@ MonoBehaviour:
   spawnDirection: 0
   minSpawnForce: 50
   maxSpawnForce: 150
-  spawnTimeWait: 2
+  spawnDelay: 2
+  spawnQuantity: 1
+  spawnQuantityIncreaseChance: 20
+  timeUntilSpawnRateIncrease: 30
   minSpawnDistance: 30
 --- !u!1 &1764209151
 GameObject:
@@ -8438,7 +8457,10 @@ MonoBehaviour:
   spawnDirection: 1
   minSpawnForce: 60
   maxSpawnForce: 150
-  spawnTimeWait: 2
+  spawnDelay: 2
+  spawnQuantity: 1
+  spawnQuantityIncreaseChance: 20
+  timeUntilSpawnRateIncrease: 5
   minSpawnDistance: 20
 --- !u!1 &2021581502
 GameObject:

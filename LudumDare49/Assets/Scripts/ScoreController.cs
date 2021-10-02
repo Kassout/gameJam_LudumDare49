@@ -1,27 +1,63 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
     [SerializeField] private float scoreDelay = 10.0f;
-    [SerializeField] private float scoreIncrement = 10.0f;
+    [SerializeField] private int scoreIncrement = 10;
+    [SerializeField] private float timeUntilScoreIncrementIncrease = 30.0f;
 
-    private Text scoreUI;
+    private Text _scoreUI;
     private int _score = 0;
     
     // Start is called before the first frame update
     void Start()
     {
-        scoreUI = GetComponent<Text>();
+        _scoreUI = GetComponent<Text>();
+
+        StartCoroutine(ComputeScore(scoreDelay));
+        StartCoroutine(ScoreUpdate());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator ComputeScore(float scoreIncreaseDelay)
     {
-        
-        
-        scoreUI.text = _score.ToString();
+        float scoreIncrementCountdown = timeUntilScoreIncrementIncrease;
+        float scoreCountDown = scoreIncreaseDelay;
+        while (true)
+        {
+            yield return null;
+
+            scoreIncrementCountdown -= Time.deltaTime;
+            scoreCountDown -= Time.deltaTime;
+            
+            // Should the score increase ?
+            if (scoreCountDown < 0)
+            {
+                scoreCountDown += scoreIncreaseDelay;
+                _score += scoreIncrement;
+            }
+            
+            // Should the score increment increase ?
+            if (scoreIncrementCountdown < 0 && scoreIncreaseDelay > 1)
+            {
+                scoreIncrementCountdown += timeUntilScoreIncrementIncrease;
+                scoreIncrement *= 2;
+            }
+        }
+    }
+
+    IEnumerator ScoreUpdate()
+    {
+        int displayScore = int.Parse(_scoreUI.text);
+        while (true)
+        {
+            if (displayScore != _score)
+            {
+                displayScore++;
+                _scoreUI.text = displayScore.ToString("D5");
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,7 +11,10 @@ public class SpawnerController : MonoBehaviour
     
     [SerializeField] private float minSpawnForce = 0.0f;
     [SerializeField] private float maxSpawnForce = 200.0f;
-    [SerializeField] private float spawnTimeWait = 1.0f;
+    [SerializeField] private float spawnDelay = 2.0f;
+    [SerializeField] private int spawnQuantity = 1;
+    [SerializeField] private float spawnQuantityIncreaseChance = 20.0f;
+    [SerializeField] private float timeUntilSpawnRateIncrease = 30.0f;
     [SerializeField] private float minSpawnDistance = 5.0f;
 
     [Serializable]
@@ -27,27 +31,60 @@ public class SpawnerController : MonoBehaviour
     void Start()
     {
         _direction = spawnDirection == SpawnDirection.Left ? Vector2.left : Vector2.right;
+
+        StartCoroutine(SpawnLoop(spawnDelay));
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator SpawnLoop(float firstDelay)
     {
-        if (Vector2.Distance(player.position, transform.position) > minSpawnDistance)
+        float spawnRateCountdown = timeUntilSpawnRateIncrease;
+        float spawnCountdown = firstDelay;
+
+        while (true)
         {
-            if (_lastSpawnTime > spawnTimeWait)
+            yield return true;
+
+            spawnRateCountdown -= Time.deltaTime;
+            spawnCountdown -= Time.deltaTime;
+            
+            // Should a new object be spawned?
+            if (spawnCountdown < 0 && Vector2.Distance(player.position, transform.position) > minSpawnDistance)
             {
-                float spawnForce = Random.Range(minSpawnForce, maxSpawnForce);
-                GameObject spawnedObject = Instantiate(toSpawnPrefab, transform.position, Quaternion.identity);
-                if (spawnedObject.CompareTag("Enemy"))
+                spawnCountdown += spawnDelay;
+
+                for (int i = 0; i < spawnQuantity; i++)
                 {
-                    Rigidbody2D spawnedObjectRb = spawnedObject.GetComponent<Rigidbody2D>();
-                    spawnedObjectRb.AddForce((Vector2.up + _direction) * spawnForce, ForceMode2D.Impulse);
+                    yield return StartCoroutine(SpawnObject());
                 }
 
-                _lastSpawnTime = 0.0f;
+            }
+            
+            // Should the spawn rate increase?
+            if (spawnRateCountdown < 0 && spawnDelay > 1)
+            {
+                spawnRateCountdown += timeUntilSpawnRateIncrease;
+                if (Random.Range(0, 100) >= spawnQuantityIncreaseChance)
+                {
+                    spawnDelay -= 0.1f;
+                }
+                else
+                {
+                    spawnQuantity += 1;
+                }
             }
         }
+    }
 
-        _lastSpawnTime += Time.deltaTime;
+    IEnumerator SpawnObject()
+    {
+        float spawnForce = Random.Range(minSpawnForce, maxSpawnForce);
+        GameObject spawnedObject = Instantiate(toSpawnPrefab, transform.position, Quaternion.identity);
+        if (spawnedObject.CompareTag("Enemy"))
+        {
+            Rigidbody2D spawnedObjectRb = spawnedObject.GetComponent<Rigidbody2D>();
+            spawnedObjectRb.AddForce((Vector2.up + _direction) * spawnForce, ForceMode2D.Impulse);
+        }
+
+        yield return new WaitForSeconds(0.2f);
     }
 }
