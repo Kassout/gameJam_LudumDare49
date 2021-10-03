@@ -60,4 +60,10 @@ public class ScoreController : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
     }
+
+    public IEnumerator AddScore(int amount)
+    {
+        _score += amount;
+        yield return null;
+    }
 }

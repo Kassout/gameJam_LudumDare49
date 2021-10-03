@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class EnemyController : MonoBehaviour
     public bool attacking;
 
     [SerializeField] private int life = 1;
+    [SerializeField] private int scoreValue = 50;
+    [SerializeField] private GameObject scoreUI;
     private bool _isDead = false;
     
     // Start is called before the first frame update
@@ -159,6 +162,7 @@ public class EnemyController : MonoBehaviour
             float deathForceMagnitude = Random.Range(50, 150);
             _objectRigidBody.AddForce(Vector2.up * deathForceMagnitude, ForceMode2D.Impulse);
             objectAnimator.SetTrigger("death");
+            StartCoroutine(scoreUI.GetComponent<ScoreController>().AddScore(scoreValue));
         }
     }
 }
