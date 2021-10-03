@@ -39,8 +39,6 @@ public class PlayerController : MonoBehaviour
     {
         _playerAnimator = GetComponent<Animator>();
         _playerSprite = GetComponent<SpriteRenderer>();
-
-        TakeDamage(3);
     }
 
     // Update is called once per frame
