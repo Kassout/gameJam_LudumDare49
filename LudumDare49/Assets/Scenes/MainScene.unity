@@ -5529,8 +5529,8 @@ MonoBehaviour:
   JumpTimeCounter: 0
   JumpTime: 0.35
   isJumping: 0
-  jumpBoost: 0.5
-  k_GroundedRadius: 0.2
+  jumpBoost: 0.3
+  k_GroundedRadius: 0.6
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []
