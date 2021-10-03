@@ -15588,6 +15588,14 @@ PrefabInstance:
       propertyPath: scoreUI
       value: 
       objectReference: {fileID: 1387735186}
+    - target: {fileID: 1350309873, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1330029235}
+    - target: {fileID: 1350309873, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
+      propertyPath: whatIsGround.m_Bits
+      value: 257
+      objectReference: {fileID: 0}
     - target: {fileID: 7655462639382288462, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -15638,6 +15646,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
+--- !u!95 &1330029235 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1350309872, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
+  m_PrefabInstance: {fileID: 1330029234}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1333964863
 GameObject:
   m_ObjectHideFlags: 0
@@ -15875,7 +15888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f7f175714ff7324f848352567844814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 40
+  movementSpeed: 40
   jumpForce: 500
   jumpBoost: 0.5
   jumpTime: 0

@@ -1,30 +1,25 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
-    bool FacingRight;
-
-    public Transform groundCheck;
-    private GameObject Player;
-
-    [SerializeField] private float objectSpeed = 3.0f;
+    [SerializeField] private float movementSpeed = 3.0f;
     [SerializeField] private bool checkGround = true;
-
-    private Rigidbody2D _objectRigidBody;
-    private List<Collider2D> _objectColliders;
-    public Animator objectAnimator;
-    private bool isGrounded = false;
-
-    public float groundedRadius = .2f;
-    public LayerMask groundedMask;
-
-    public bool CollidingWithAura;
-
-    public Vector3 DirectionOfPlayer;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundedRadius = .2f;
+    [SerializeField] private LayerMask whatIsGround;
+    
+    private bool _facingRight;
+    private Vector3 _directionOfPlayer;
+    private bool _isGrounded = false;
+    
+    private GameObject _player;
+    private Rigidbody2D _enemyRigidbody;
+    private List<Collider2D> _enemyColliders;
+    public Animator animator;
+    
+    public bool collidingWithAura;
 
     public GameObject hitBox;
     public Transform atkPos;
@@ -42,9 +37,9 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _objectRigidBody = GetComponent<Rigidbody2D>();
-        _objectColliders = GetComponents<Collider2D>().ToList();
-        Player = FindObjectOfType<PlayerController>().gameObject;
+        _enemyRigidbody = GetComponent<Rigidbody2D>();
+        _enemyColliders = GetComponents<Collider2D>().ToList();
+        _player = FindObjectOfType<PlayerController>().gameObject;
         atkCooldown = atkCooldownValue + 2;
     }
 
@@ -52,25 +47,22 @@ public class EnemyController : MonoBehaviour
     {
         if (!_isDead)
         {
-            DirectionOfPlayer = (transform.position - Player.transform.position).normalized;
+            _directionOfPlayer = (transform.position - _player.transform.position).normalized;
 
             if (checkGround)
             {
+                _isGrounded = false;
+                animator.SetBool("isGrounded", _isGrounded);
+                
                 // The enemy is grounded if a circlecast to the groundcheck position hits anything designated as ground
                 // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, groundedMask);
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround);
                 for (int i = 0; i < colliders.Length; i++)
                 {
                     if (colliders[i].gameObject != gameObject)
                     {
-                        isGrounded = true;
-                        objectAnimator.SetBool("isGrounded", isGrounded);
-                        break;
-                    }
-                    else
-                    {
-                        isGrounded = false;
-                        objectAnimator.SetBool("isGrounded", isGrounded);
+                        _isGrounded = true;
+                        animator.SetBool("isGrounded", _isGrounded);
                     }
                 }
             }
@@ -83,11 +75,11 @@ public class EnemyController : MonoBehaviour
     {
         if (!_isDead)
         {
-            if (checkGround && isGrounded)
+            if (checkGround && _isGrounded)
             {
-                if (!CollidingWithAura)
+                if (!collidingWithAura)
                 {
-                    _objectRigidBody.AddForce(-DirectionOfPlayer * objectSpeed * _objectRigidBody.mass);
+                    _enemyRigidbody.AddForce(-_directionOfPlayer * movementSpeed * _enemyRigidbody.mass);
                 }
                 else
                 {
@@ -101,13 +93,13 @@ public class EnemyController : MonoBehaviour
             }
 
             // If the input is moving the enemy right and the player is facing left...
-            if (DirectionOfPlayer.x < 0 && !FacingRight)
+            if (_directionOfPlayer.x < 0 && !_facingRight)
             {
                 // ... flip
                 Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
-            else if (DirectionOfPlayer.x > 0 && FacingRight)
+            else if (_directionOfPlayer.x > 0 && _facingRight)
             {
                 // ... flip
                 Flip();
@@ -119,7 +111,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Aura")
         {
-            CollidingWithAura = true;
+            collidingWithAura = true;
         }
     }
 
@@ -127,7 +119,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Aura")
         {
-            CollidingWithAura = false;
+            collidingWithAura = false;
         }
     }
 
@@ -141,7 +133,7 @@ public class EnemyController : MonoBehaviour
     private void Flip()
     {
         // Switch the way the player is labelled as facing.
-        FacingRight = !FacingRight;
+        _facingRight = !_facingRight;
 
         // Multiply the player's x local scale by -1.
         Vector3 theScale = transform.localScale;
@@ -155,13 +147,13 @@ public class EnemyController : MonoBehaviour
         if (life <= 0)
         {
             _isDead = true;
-            foreach (var collider2D in _objectColliders)
+            foreach (var collider2D in _enemyColliders)
             {
                 collider2D.enabled = false;
             }
             float deathForceMagnitude = Random.Range(50, 150);
-            _objectRigidBody.AddForce(Vector2.up * deathForceMagnitude, ForceMode2D.Impulse);
-            objectAnimator.SetTrigger("death");
+            _enemyRigidbody.AddForce(Vector2.up * deathForceMagnitude, ForceMode2D.Impulse);
+            animator.SetTrigger("death");
             StartCoroutine(scoreUI.GetComponent<ScoreController>().AddScore(scoreValue));
         }
     }

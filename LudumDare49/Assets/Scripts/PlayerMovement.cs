@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float runSpeed = 40f;
+    [SerializeField] private float movementSpeed = 40f;
     [SerializeField] private float jumpForce = 400f;					        // Amount of force added when the player jumps.
     [SerializeField] private float jumpBoost = 0.5f;
     [SerializeField] private float jumpTime = 0.0f;                            // Amout of time a player is able to jump.
@@ -20,27 +20,27 @@ public class PlayerMovement : MonoBehaviour
 	private Vector3 _velocity = Vector3.zero;
     
     // Components
-    private Rigidbody2D _rigidBody2D;
+    private Rigidbody2D _playerRigidbody;
 	private Animator _playerAnimator;
     private PlayerController _playerController;
 
 	private void Awake()
 	{
-		_rigidBody2D = GetComponent<Rigidbody2D>();
+        _playerRigidbody = GetComponent<Rigidbody2D>();
 		_playerAnimator = GetComponent<Animator>();
         _playerController = GetComponent<PlayerController>();
     }
 
     private void Update()
     {
-        _horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        _horizontalMove = Input.GetAxisRaw("Horizontal") * movementSpeed;
 
         if (_playerController.isGrounded)
         {
             if (Input.GetButtonDown("Jump") || Input.GetKey(KeyCode.W))
             {
                 _playerController.isGrounded = false;
-                _rigidBody2D.AddForce(Vector2.up * jumpForce);
+                _playerRigidbody.AddForce(Vector2.up * jumpForce);
                 _isJumping = true;
             }
             else
@@ -71,9 +71,9 @@ public class PlayerMovement : MonoBehaviour
         if (_playerController.isGrounded || airControl)
         {
             // Move the character by finding the target velocity
-            Vector3 targetVelocity = new Vector2(move * 10f, _rigidBody2D.velocity.y);
+            Vector3 targetVelocity = new Vector2(move * 10f, _playerRigidbody.velocity.y);
             // And then smoothing it out and applying it to the character
-            _rigidBody2D.velocity = Vector3.SmoothDamp(_rigidBody2D.velocity, targetVelocity, ref _velocity, movementSmoothing);
+            _playerRigidbody.velocity = Vector3.SmoothDamp(_playerRigidbody.velocity, targetVelocity, ref _velocity, movementSmoothing);
 
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !_facingRight)
@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (_jumpTimeCounter > 0)
                 {
-                    _rigidBody2D.velocity += Vector2.up * jumpBoost;
+                    _playerRigidbody.velocity += Vector2.up * jumpBoost;
                     _jumpTimeCounter -= Time.deltaTime;
                 }
                 else

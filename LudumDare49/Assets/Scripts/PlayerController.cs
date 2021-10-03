@@ -9,11 +9,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isGrounded;
     
     [SerializeField] private int life = 3;
-
     [SerializeField] private int maxLife = 5;
-
     [SerializeField] private float invicibilityDuration = 1.0f;
-
     [SerializeField] private GameObject lifeUI;
     
     // Radius of the overlap circle to determine if grounded
@@ -24,13 +21,12 @@ public class PlayerController : MonoBehaviour
     
     // A position marking where to check if the player is grounded.
     [SerializeField] private Transform groundCheckTransform;
-
     [SerializeField] private GameObject lifePrefab;
-
+    
+    private bool _canTakeDamage = true;
+    
     private Animator _playerAnimator;
     private SpriteRenderer _playerSprite;
-
-    private bool _canTakeDamage = true;
 
     // Cached property index
     private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
