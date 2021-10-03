@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class enemyController : MonoBehaviour
 {
+    bool FacingRight;
+
     public Transform groundCheck;
     private GameObject Player;
 
@@ -84,6 +86,19 @@ public class enemyController : MonoBehaviour
                 }
             }
         }
+
+        // If the input is moving the enemy right and the player is facing left...
+        if (DirectionOfPlayer.x < 0 && !FacingRight)
+        {
+            // ... flip
+            Flip();
+        }
+        // Otherwise if the input is moving the player left and the player is facing right...
+        else if (DirectionOfPlayer.x > 0 && FacingRight)
+        {
+            // ... flip
+            Flip();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -107,5 +122,16 @@ public class enemyController : MonoBehaviour
         GameObject instance = Instantiate(hitBox, atkPos.position, Quaternion.identity, transform);
         instance.GetComponent<hitBox>().origin = this;
         Destroy(instance, atkTimer);
+    }
+
+    private void Flip()
+    {
+        // Switch the way the player is labelled as facing.
+        FacingRight = !FacingRight;
+
+        // Multiply the player's x local scale by -1.
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 }
