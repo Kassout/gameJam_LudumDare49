@@ -1,9 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject startingUI;
-    
+    public float transitionTime = 0.3f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,8 +17,16 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Time.timeScale = 1;
-            startingUI.SetActive(false);
+            StartCoroutine(StartGame());
+
         }
+    }
+
+    IEnumerator StartGame()
+    {
+        startingUI.GetComponentInChildren<Animator>().SetTrigger("startGame");
+        yield return new WaitForSecondsRealtime(transitionTime);
+        Time.timeScale = 1;
+        startingUI.SetActive(false); 
     }
 }
