@@ -109,7 +109,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Aura")
+        if (collision.gameObject.CompareTag("Aura"))
         {
             collidingWithAura = true;
         }
@@ -117,7 +117,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Aura")
+        if (collision.gameObject.CompareTag("Aura"))
         {
             collidingWithAura = false;
         }

@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject startingUI;
     public float transitionTime = 0.3f;
-
+    public MusicPlayer musicPlayer;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,6 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(StartGame());
-
         }
     }
 
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
         startingUI.GetComponentInChildren<Animator>().SetTrigger("startGame");
         yield return new WaitForSecondsRealtime(transitionTime);
         Time.timeScale = 1;
-        startingUI.SetActive(false); 
+        SceneManager.LoadScene(1);
+        musicPlayer.Switch();
     }
 }
