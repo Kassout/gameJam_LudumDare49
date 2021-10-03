@@ -6,6 +6,11 @@ public class GameManager : MonoBehaviour
     public GameObject startingUI;
     public float transitionTime = 0.3f;
 
+    [SerializeField] private AudioSource startScreenSound;
+    [SerializeField] private AudioSource lowIntensitySound;
+    [SerializeField] private AudioSource highIntensitySound;
+    [SerializeField] private AudioSource transitionSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +23,6 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(StartGame());
-
         }
     }
 
@@ -28,5 +32,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(transitionTime);
         Time.timeScale = 1;
         startingUI.SetActive(false); 
+        startScreenSound.Stop();
+        lowIntensitySound.Play();
     }
 }
