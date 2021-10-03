@@ -4,16 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
+  - Aura
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - Enemy
   - Water
   - UI
-  - Enemy
-  - 
+  - Player
+  - solidBody
   - 
   - 
   - 
