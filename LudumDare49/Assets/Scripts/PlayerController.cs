@@ -40,8 +40,7 @@ public class PlayerController : MonoBehaviour
         _playerAnimator = GetComponent<Animator>();
         _playerSprite = GetComponent<SpriteRenderer>();
 
-        TakeDamage(2);
-        TakePowerUp(2);
+        TakeDamage(3);
     }
 
     // Update is called once per frame
@@ -73,7 +72,10 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Invincibility(invicibilityDuration));
                 for (int i = 0; i < damage; i++)
                 {
-                    Destroy(lifeUI.transform.GetChild(i).gameObject);
+                    if (lifeUI.transform.GetChild(i))
+                    {
+                        Destroy(lifeUI.transform.GetChild(i).gameObject);
+                    }
                 }
             }
             else
