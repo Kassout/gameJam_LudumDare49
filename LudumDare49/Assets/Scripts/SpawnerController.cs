@@ -81,7 +81,7 @@ public class SpawnerController : MonoBehaviour
         if (spawnedObject.CompareTag("Enemy"))
         {
             Rigidbody2D spawnedObjectRb = spawnedObject.GetComponent<Rigidbody2D>();
-            spawnedObjectRb.AddForce((Vector2.up + _direction) * spawnForce, ForceMode2D.Impulse);
+            spawnedObjectRb.AddForce(_direction * spawnForce, ForceMode2D.Impulse);
         }
 
         yield return new WaitForSeconds(0.2f);

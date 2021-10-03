@@ -182,22 +182,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5249f08127b9d744973f4dda9fb0d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheck: {fileID: 7655462639915251224}
-  objectSpeed: 5
+  movementSpeed: 3
   checkGround: 1
-  objectAnimator: {fileID: 1350309872}
+  groundCheck: {fileID: 7655462639915251224}
   groundedRadius: 0.6
-  groundedMask:
+  whatIsGround:
     serializedVersion: 2
-    m_Bits: 1
-  CollidingWithAura: 0
-  DirectionOfPlayer: {x: 0, y: 0, z: 0}
+    m_Bits: 257
+  animator: {fileID: 1350309872}
+  collidingWithAura: 0
   hitBox: {fileID: 2065576419188655416, guid: cf12b8b51c55bdc45b856aadacc5b79b, type: 3}
   atkPos: {fileID: 0}
   atkTimer: 0.5
   atkCooldownValue: 4
   attacking: 0
   life: 2
+  scoreValue: 50
+  scoreUI: {fileID: 0}
 --- !u!1 &7655462639915251225
 GameObject:
   m_ObjectHideFlags: 0

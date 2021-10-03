@@ -1,16 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject startingUI;
     public float transitionTime = 0.3f;
-
-    [SerializeField] private AudioSource startScreenSound;
-    [SerializeField] private AudioSource lowIntensitySound;
-    [SerializeField] private AudioSource highIntensitySound;
-    [SerializeField] private AudioSource transitionSound;
-
+    public MusicPlayer musicPlayer;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -31,8 +28,7 @@ public class GameManager : MonoBehaviour
         startingUI.GetComponentInChildren<Animator>().SetTrigger("startGame");
         yield return new WaitForSecondsRealtime(transitionTime);
         Time.timeScale = 1;
-        startingUI.SetActive(false); 
-        startScreenSound.Stop();
-        lowIntensitySound.Play();
+        SceneManager.LoadScene(1);
+        musicPlayer.Switch();
     }
 }
