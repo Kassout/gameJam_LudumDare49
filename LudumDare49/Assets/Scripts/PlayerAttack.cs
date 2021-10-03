@@ -29,13 +29,16 @@ public class PlayerAttack : MonoBehaviour
         {
             // Then you can attack
             if (Input.GetButtonDown("Fire1") && _playerController.isGrounded)
-            {
+            { 
                 _playerAnimator.SetTrigger("attack");
                 Collider2D[] enemiesToDamage =
                     Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), whatIsEnemies);
                 for (int i = 0; i < enemiesToDamage.Length; i++)
                 {
-                    enemiesToDamage[i].GetComponent<EnemyController>().TakeDamage(damage);
+                    if (enemiesToDamage[i].GetComponent<EnemyController>())
+                    {
+                        enemiesToDamage[i].GetComponent<EnemyController>().TakeDamage(damage);
+                    }
                 }
                 
                 _timeBtwAttack = startTimeBtwAttack;

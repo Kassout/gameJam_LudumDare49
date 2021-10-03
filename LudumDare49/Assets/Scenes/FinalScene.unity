@@ -14980,21 +14980,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1350309873, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
-      propertyPath: life
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7655462639382288456, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7655462639382288462, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7655462639382288462, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7655462639382288462, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15370,7 +15358,7 @@ MonoBehaviour:
   attackRangeX: 1
   attackRangeY: 1
   attackPos: {fileID: 1214419284}
-  startTimeBtwAttack: 10
+  startTimeBtwAttack: 0.3
   whatIsEnemies:
     serializedVersion: 2
     m_Bits: 8
