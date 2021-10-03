@@ -49,13 +49,13 @@ public class ScoreController : MonoBehaviour
 
     IEnumerator ScoreUpdate()
     {
-        int displayScore = int.Parse(_scoreUI.text);
+        int displayScore = int.Parse(_scoreUI.text.Split(':')[1]);
         while (true)
         {
             if (displayScore != _score)
             {
                 displayScore++;
-                _scoreUI.text = displayScore.ToString("D5");
+                _scoreUI.text = "Score : " + displayScore.ToString("D7");
             }
             yield return new WaitForSeconds(0.05f);
         }
