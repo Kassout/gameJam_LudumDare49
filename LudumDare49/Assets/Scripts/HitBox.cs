@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class hitBox : MonoBehaviour
+public class HitBox : MonoBehaviour
 {
-    public enemyController origin;
+    public EnemyController origin;
 
     private void OnDestroy()
     {
