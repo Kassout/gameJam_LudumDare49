@@ -10,11 +10,12 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform attackPos;
     [SerializeField] private float startTimeBtwAttack;
     [SerializeField] private LayerMask whatIsEnemies;
+    [SerializeField] private GameObject scoreUI;
     
     private float _timeBtwAttack = 0.0f;
     private PlayerController _playerController;
     private Animator _playerAnimator;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +38,12 @@ public class PlayerAttack : MonoBehaviour
                 {
                     if (enemiesToDamage[i].GetComponent<EnemyController>())
                     {
-                        enemiesToDamage[i].GetComponent<EnemyController>().TakeDamage(damage);
+                        EnemyController enemy = enemiesToDamage[i].GetComponent<EnemyController>();
+                        bool isDead = enemy.TakeDamage(damage);
+                        if (isDead)
+                        {
+                            StartCoroutine(scoreUI.GetComponent<ScoreController>().AddScore(enemy.scoreValue));
+                        }
                     }
                 }
                 

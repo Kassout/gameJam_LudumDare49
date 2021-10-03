@@ -30,9 +30,8 @@ public class EnemyController : MonoBehaviour
     public bool attacking;
 
     [SerializeField] private int life = 1;
-    [SerializeField] private int scoreValue = 50;
-    [SerializeField] private GameObject scoreUI;
-    [SerializeField]private bool _isDead = false;
+    public int scoreValue = 50;
+    private bool _isDead = false;
     
     // Start is called before the first frame update
     void Start()
@@ -141,7 +140,7 @@ public class EnemyController : MonoBehaviour
         transform.localScale = theScale;
     }
 
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
         life -= damage;
         if (life <= 0)
@@ -154,7 +153,8 @@ public class EnemyController : MonoBehaviour
             float deathForceMagnitude = Random.Range(50, 150);
             _enemyRigidbody.AddForce(Vector2.up * deathForceMagnitude, ForceMode2D.Impulse);
             animator.SetTrigger("death");
-            StartCoroutine(scoreUI.GetComponent<ScoreController>().AddScore(scoreValue));
         }
+
+        return _isDead;
     }
 }

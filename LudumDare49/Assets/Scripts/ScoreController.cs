@@ -54,7 +54,15 @@ public class ScoreController : MonoBehaviour
         {
             if (displayScore != _score)
             {
-                displayScore++;
+                if (displayScore > 100 && displayScore + 10 < _score)
+                {
+                    displayScore += 10;
+                }
+                else
+                {
+                    displayScore++;
+                }
+                
                 _scoreUI.text = "Score : " + displayScore.ToString("D7");
             }
             yield return new WaitForSeconds(0.05f);
