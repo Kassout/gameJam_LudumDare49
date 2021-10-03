@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -13,7 +14,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool checkGround = true;
 
     private Rigidbody2D _objectRigidBody;
-    private Collider2D _objectCollider;
+    private List<Collider2D> _objectColliders;
     public Animator objectAnimator;
     private bool isGrounded = false;
 
@@ -39,7 +40,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         _objectRigidBody = GetComponent<Rigidbody2D>();
-        _objectCollider = GetComponent<Collider2D>();
+        _objectColliders = GetComponents<Collider2D>().ToList();
         Player = FindObjectOfType<PlayerController>().gameObject;
         atkCooldown = atkCooldownValue + 2;
     }
@@ -151,10 +152,12 @@ public class EnemyController : MonoBehaviour
         if (life <= 0)
         {
             _isDead = true;
-            _objectCollider.enabled = false;
-            Vector2 deathDirection = Random.Range(0, 1) == 0 ? Vector2.left : Vector2.right;
-            float deathForceMagnitude = Random.Range(50, 100);
-            _objectRigidBody.AddForce((Vector2.up + deathDirection) * deathForceMagnitude, ForceMode2D.Impulse);
+            foreach (var collider2D in _objectColliders)
+            {
+                collider2D.enabled = false;
+            }
+            float deathForceMagnitude = Random.Range(50, 150);
+            _objectRigidBody.AddForce(Vector2.up * deathForceMagnitude, ForceMode2D.Impulse);
             objectAnimator.SetTrigger("death");
         }
     }
