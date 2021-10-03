@@ -32,7 +32,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int life = 1;
     [SerializeField] private int scoreValue = 50;
     [SerializeField] private GameObject scoreUI;
-    private bool _isDead = false;
+    [SerializeField]private bool _isDead = false;
     
     // Start is called before the first frame update
     void Start()
