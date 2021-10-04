@@ -181,10 +181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d183e54d8595c23459c34e5a28cd70c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 300
+  deathAnimationDuration: 3
   maxLeft: -8.5
   maxRight: 8.5
   isDead: 0
-  maxLives: 50
+  maxLives: 25
 --- !u!1 &7481859408085450792
 GameObject:
   m_ObjectHideFlags: 0

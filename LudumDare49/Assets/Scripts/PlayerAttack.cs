@@ -45,6 +45,16 @@ public class PlayerAttack : MonoBehaviour
                             StartCoroutine(scoreUI.GetComponent<ScoreController>().AddScore(enemy.scoreValue));
                         }
                     }
+
+                    if (enemiesToDamage[i].GetComponent<GorillaController>())
+                    {
+                        GorillaController gorillaController = enemiesToDamage[i].GetComponent<GorillaController>();
+                        bool isDead = gorillaController.TakeDamage(damage);
+                        if (isDead)
+                        {
+                            StartCoroutine(scoreUI.GetComponent<ScoreController>().AddScore(gorillaController.scoreValue));
+                        }
+                    }
                 }
                 
                 _timeBtwAttack = startTimeBtwAttack;

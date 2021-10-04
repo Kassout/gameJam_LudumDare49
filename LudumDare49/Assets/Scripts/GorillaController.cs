@@ -1,11 +1,13 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Gorilla : MonoBehaviour
+public class GorillaController : MonoBehaviour
 {
-    public float maxLeft;
-    public float maxRight;
+    public int scoreValue = 300;
+    [SerializeField] private float deathAnimationDuration = 3.0f;
+    [SerializeField] private float maxLeft;
+    [SerializeField] private float maxRight;
     [HideInInspector] public bool isDead = false;
     
     [SerializeField] private int maxLives;
@@ -48,10 +50,19 @@ public class Gorilla : MonoBehaviour
         _life -= damage;
         if (_life <= 0)
         {
-            isDead = true;
-            _gorillaAnimator.SetTrigger("death");
+            StartCoroutine(Die());
         }
 
         return isDead;
+    }
+
+    IEnumerator Die()
+    {
+        isDead = true;
+        _gorillaAnimator.SetTrigger("death");
+
+        yield return new WaitForSeconds(deathAnimationDuration);
+        
+        Destroy(gameObject);
     }
 }
