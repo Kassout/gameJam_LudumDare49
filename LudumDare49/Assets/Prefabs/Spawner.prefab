@@ -47,11 +47,11 @@ MonoBehaviour:
   toSpawnPrefab:
   - {fileID: 3935425759777894423, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
   - {fileID: 1177000724230936318, guid: 174dd4ea56612c6409eec665f4cd7e02, type: 3}
-  spawnDirection: 1
+  spawnDirection: 0
   minSpawnForce: 60
   maxSpawnForce: 150
   spawnDelay: 3
   spawnQuantity: 1
   spawnQuantityIncreaseChance: 20
   timeUntilSpawnRateIncrease: 30
-  minSpawnDistance: 15
+  minSpawnDistance: 17

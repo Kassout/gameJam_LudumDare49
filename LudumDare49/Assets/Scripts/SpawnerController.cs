@@ -46,33 +46,36 @@ public class SpawnerController : MonoBehaviour
         while (true)
         {
             yield return true;
-
-            spawnRateCountdown -= Time.deltaTime;
-            spawnCountdown -= Time.deltaTime;
             
-            // Should a new object be spawned?
-            if (spawnCountdown < 0 && Vector2.Distance(player.position, transform.position) > minSpawnDistance && !stopSpawn)
+            if (!stopSpawn)
             {
-                spawnCountdown = spawnDelay;
-
-                for (int i = 0; i < spawnQuantity; i++)
-                {
-                    yield return StartCoroutine(SpawnObject());
-                }
-
-            }
+                spawnRateCountdown -= Time.deltaTime;
+                spawnCountdown -= Time.deltaTime;
             
-            // Should the spawn rate increase?
-            if (spawnRateCountdown < 0 && spawnDelay > 1 && spawnQuantity < 4)
-            {
-                spawnRateCountdown += timeUntilSpawnRateIncrease;
-                if (Random.Range(0, 100) >= spawnQuantityIncreaseChance && spawnDelay > 1)
+                // Should a new object be spawned?
+                if (spawnCountdown < 0 && Vector2.Distance(player.position, transform.position) > minSpawnDistance)
                 {
-                    spawnDelay -= 0.1f;
+                    spawnCountdown = spawnDelay;
+
+                    for (int i = 0; i < spawnQuantity; i++)
+                    {
+                        yield return StartCoroutine(SpawnObject());
+                    }
+
                 }
-                else if (spawnQuantity < 4)
+            
+                // Should the spawn rate increase?
+                if (spawnRateCountdown < 0 && spawnDelay > 1 && spawnQuantity < 4)
                 {
-                    spawnQuantity += 1;
+                    spawnRateCountdown += timeUntilSpawnRateIncrease;
+                    if (Random.Range(0, 100) >= spawnQuantityIncreaseChance && spawnDelay > 1)
+                    {
+                        spawnDelay -= 0.1f;
+                    }
+                    else if (spawnQuantity < 4)
+                    {
+                        spawnQuantity += 1;
+                    }
                 }
             }
         }

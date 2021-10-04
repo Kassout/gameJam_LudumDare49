@@ -17830,14 +17830,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1371036928}
-    - target: {fileID: 4290638182297951221, guid: bcfb0d539bc12724181896ff0e300fb7, type: 3}
-      propertyPath: spawnDirection
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4290638182297951221, guid: bcfb0d539bc12724181896ff0e300fb7, type: 3}
-      propertyPath: minSpawnDistance
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 4290638182297951222, guid: bcfb0d539bc12724181896ff0e300fb7, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -19900,8 +19892,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1371036928}
     - target: {fileID: 4290638182297951221, guid: bcfb0d539bc12724181896ff0e300fb7, type: 3}
-      propertyPath: minSpawnDistance
-      value: 15
+      propertyPath: spawnDirection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4290638182297951222, guid: bcfb0d539bc12724181896ff0e300fb7, type: 3}
       propertyPath: m_RootOrder
