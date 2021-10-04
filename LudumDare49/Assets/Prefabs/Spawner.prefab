@@ -54,4 +54,4 @@ MonoBehaviour:
   spawnQuantity: 1
   spawnQuantityIncreaseChance: 20
   timeUntilSpawnRateIncrease: 30
-  minSpawnDistance: 20
+  minSpawnDistance: 15

@@ -47,6 +47,11 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
+    public void PlayClip(AudioClip toPlay)
+    {
+        StartCoroutine(PlaySound(toPlay,false));
+    }
+
     public IEnumerator PlaySound(AudioClip toPlay, bool transition)
     {
         currentClip = toPlay;
@@ -54,7 +59,7 @@ public class MusicPlayer : MonoBehaviour
         float startVolume = source.volume;
  
         while (source.volume > 0) {
-            source.volume -= startVolume * Time.deltaTime / 1.5f;
+            source.volume -= startVolume * Time.unscaledDeltaTime / 1.5f;
  
             yield return null;
         }

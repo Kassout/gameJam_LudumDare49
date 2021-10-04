@@ -87,7 +87,8 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 0.2f;
         screenBackground.color = new Color(1, 0, 0, 0.4f);
         
-        yield return new WaitForSecondsRealtime(2.0f);
+        MusicPlayer.Instance.PlayClip(MusicPlayer.Instance.startScreenClip);
+        yield return new WaitForSecondsRealtime(1.5f);
         
         screenBackground.color = Color.clear;
         Time.timeScale = 1.0f;

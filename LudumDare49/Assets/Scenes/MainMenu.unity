@@ -219,8 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingUI: {fileID: 2101604512}
-  transitionTime: 0.3
-  musicPlayer: {fileID: 0}
+  transitionTime: 1
 --- !u!4 &358033827
 Transform:
   m_ObjectHideFlags: 0

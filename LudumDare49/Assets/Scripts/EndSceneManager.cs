@@ -6,7 +6,6 @@ public class EndSceneManager : MonoBehaviour
 {
     private void Start()
     {
-        StartCoroutine(MusicPlayer.Instance.PlaySound(MusicPlayer.Instance.startScreenClip, false));
         StartCoroutine(EndGame());
     }
 
