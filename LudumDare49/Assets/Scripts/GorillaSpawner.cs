@@ -39,7 +39,7 @@ public class GorillaSpawner : MonoBehaviour
                 _spawnCountDown = spawnDelay;
             }
             
-            _spawnCountDown -= Time.unscaledDeltaTime;
+            _spawnCountDown -= Time.deltaTime;
         }
 
         if (!_currentGorilla && !_hasStartedSpawn)
