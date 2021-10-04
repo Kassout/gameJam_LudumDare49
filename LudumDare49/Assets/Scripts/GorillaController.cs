@@ -172,6 +172,7 @@ public class GorillaController : MonoBehaviour
 
         yield return new WaitForSeconds(deathAnimationDuration);
         
+        SpawnerController.stopSpawn = false;
         Destroy(gameObject);
     }
 }

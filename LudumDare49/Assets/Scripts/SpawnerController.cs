@@ -8,6 +8,8 @@ public class SpawnerController : MonoBehaviour
     public Transform player;
     public GameObject toSpawnPrefab;
     public SpawnDirection spawnDirection;
+
+    public static bool stopSpawn = false;
     
     [SerializeField] private float minSpawnForce = 0.0f;
     [SerializeField] private float maxSpawnForce = 200.0f;
@@ -47,7 +49,7 @@ public class SpawnerController : MonoBehaviour
             spawnCountdown -= Time.deltaTime;
             
             // Should a new object be spawned?
-            if (spawnCountdown < 0 && Vector2.Distance(player.position, transform.position) > minSpawnDistance)
+            if (spawnCountdown < 0 && Vector2.Distance(player.position, transform.position) > minSpawnDistance && !stopSpawn)
             {
                 spawnCountdown = spawnDelay;
 

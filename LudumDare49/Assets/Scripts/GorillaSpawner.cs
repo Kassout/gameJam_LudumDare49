@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GorillaSpawner : MonoBehaviour
@@ -8,6 +10,8 @@ public class GorillaSpawner : MonoBehaviour
     private float _spawnCountDown;
     private bool _countDownTrigger = true;
     private GameObject currentGorilla;
+
+    private bool _firstTimeSpawn = true;
     
     // Start is called before the first frame update
     void Start()
@@ -22,6 +26,12 @@ public class GorillaSpawner : MonoBehaviour
         {
             if (_spawnCountDown <= 0)
             {
+                if (_firstTimeSpawn)
+                {
+                    SpawnerController.stopSpawn = true;
+                    _firstTimeSpawn = false;
+                }
+                
                 currentGorilla = Instantiate(gorilla);
                 currentGorilla.transform.SetParent(transform);
 
@@ -29,7 +39,7 @@ public class GorillaSpawner : MonoBehaviour
                 _spawnCountDown = spawnDelay;
             }
             
-            _spawnCountDown -= Time.deltaTime;
+            _spawnCountDown -= Time.unscaledDeltaTime;
         }
 
         if (!currentGorilla)
