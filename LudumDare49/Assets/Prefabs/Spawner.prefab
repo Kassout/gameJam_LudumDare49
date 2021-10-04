@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4290638182297951223}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -48,7 +48,7 @@ MonoBehaviour:
   spawnDirection: 1
   minSpawnForce: 60
   maxSpawnForce: 150
-  spawnDelay: 2
+  spawnDelay: 3
   spawnQuantity: 1
   spawnQuantityIncreaseChance: 20
   timeUntilSpawnRateIncrease: 30

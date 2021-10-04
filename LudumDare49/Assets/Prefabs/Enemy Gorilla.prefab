@@ -232,7 +232,7 @@ MonoBehaviour:
   deathAnimationDuration: 3
   maxLeftPosition: -8.5
   maxRightPosition: 8.5
-  maxLives: 25
+  maxLives: 35
   startTimeBtwAttack: 10
   impactForceMagnitude: 300
   leftRopeAnchor: {fileID: 0}
