@@ -49,7 +49,7 @@ public class SpawnerController : MonoBehaviour
             // Should a new object be spawned?
             if (spawnCountdown < 0 && Vector2.Distance(player.position, transform.position) > minSpawnDistance)
             {
-                spawnCountdown += spawnDelay;
+                spawnCountdown = spawnDelay;
 
                 for (int i = 0; i < spawnQuantity; i++)
                 {

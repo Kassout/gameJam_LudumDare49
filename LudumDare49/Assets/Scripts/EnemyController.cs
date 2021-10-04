@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,7 +25,8 @@ public class EnemyController : MonoBehaviour
     public GameObject hitBox;
     public Transform atkPos;
     public float atkTimer;
-    [System.NonSerialized] public float atkCooldown;
+    [SerializeField] private float attackWindowDelay = 0.3f; // Time between collision with player trigger and attack hit box trigger
+    [System.NonSerialized] public float atkCooldown = 0.0f;
     public float atkCooldownValue;
     
     public bool attacking;
@@ -39,7 +41,7 @@ public class EnemyController : MonoBehaviour
         _enemyRigidbody = GetComponent<Rigidbody2D>();
         _enemyColliders = GetComponents<Collider2D>().ToList();
         _player = FindObjectOfType<PlayerController>().gameObject;
-        atkCooldown = atkCooldownValue + 2;
+        atkCooldown = atkCooldownValue;
     }
 
     private void Update()
@@ -93,9 +95,7 @@ public class EnemyController : MonoBehaviour
                     animator.SetBool("isGrounded", true);
                     if (!attacking && atkCooldown <= 0)
                     {
-                        Attack();
-                        attacking = true;
-                        atkCooldown = atkCooldownValue;
+                        StartCoroutine(Attack());
                     }
                 }
             }
@@ -131,12 +131,22 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void Attack()
+    IEnumerator Attack()
     {
-        GameObject instance = Instantiate(hitBox, atkPos.position, Quaternion.identity, transform);
-        instance.GetComponent<HitBox>().origin = this;
-        Destroy(instance, atkTimer);
-        animator.Play("attack");
+        attacking = true;
+
+        yield return new WaitForSeconds(attackWindowDelay);
+
+        if (!_isDead)
+        {
+            animator.SetTrigger("attack");
+
+            GameObject instance = Instantiate(hitBox, atkPos.position, Quaternion.identity, transform);
+            instance.GetComponent<HitBox>().origin = this;
+            Destroy(instance, atkTimer);
+        
+            atkCooldown = atkCooldownValue;
+        }
     }
 
     private void Flip()

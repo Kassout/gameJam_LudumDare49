@@ -12,15 +12,15 @@ public class Gorilla : MonoBehaviour
     {
         float targetX = Random.Range(transform.position.x - 5, transform.position.x + 5);
 
-        transform.Translate(new Vector3(targetX, -2f, 0));
+        transform.Translate(new Vector3(targetX, 0, 0));
 
         if(transform.position.x > maxRight)
         {
-            transform.position = new Vector3(maxRight, -2, 0);
+            transform.position = new Vector3(maxRight, 0, 0);
         }
         if (transform.position.x < maxLeft)
         {
-            transform.position = new Vector3(maxLeft, -2, 0);
+            transform.position = new Vector3(maxLeft, 0, 0);
         }
     }
 }

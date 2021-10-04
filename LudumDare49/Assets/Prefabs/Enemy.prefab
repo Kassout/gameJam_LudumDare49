@@ -199,7 +199,7 @@ MonoBehaviour:
   hitBox: {fileID: 2065576419188655416, guid: cf12b8b51c55bdc45b856aadacc5b79b, type: 3}
   atkPos: {fileID: 3935425760459426363}
   atkTimer: 0.5
-  atkCooldownValue: 4
+  atkCooldownValue: 2
   attacking: 0
   life: 1
   scoreValue: 50
@@ -227,7 +227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3935425760459426362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3935425759777894411}
