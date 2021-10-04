@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Aura
   - Enemy
+  - LeftAnchor
+  - RightAnchor
   layers:
   - Default
   - TransparentFX
