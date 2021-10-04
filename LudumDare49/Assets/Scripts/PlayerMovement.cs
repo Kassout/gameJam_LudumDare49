@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool airControl = false;                           // Whether or not a player can steer while jumping;
 
     [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;	// How much to smooth out the movement
+
+    public AudioClip walkClip;
+    public AudioClip jumpClip;
     
     // Jump parameters
     private bool _isJumping;
@@ -23,12 +26,14 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _playerRigidbody;
 	private Animator _playerAnimator;
     private PlayerController _playerController;
-
+    private AudioSource _audioSource;
+    
 	private void Awake()
 	{
         _playerRigidbody = GetComponent<Rigidbody2D>();
 		_playerAnimator = GetComponent<Animator>();
         _playerController = GetComponent<PlayerController>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -41,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 _playerController.isGrounded = false;
                 _playerRigidbody.AddForce(Vector2.up * jumpForce);
+                PlayJumpSound();
                 _isJumping = true;
             }
             else
@@ -53,11 +59,31 @@ public class PlayerMovement : MonoBehaviour
         if (_horizontalMove != 0 && _playerController.isGrounded)
         {
             _playerAnimator.SetBool("isWalking", true);
+            if (!_audioSource.isPlaying)
+            {
+                PlayWalkSound();
+            }
         }
         else if (!_playerController.isGrounded || _horizontalMove == 0 || _isJumping)
         {
             _playerAnimator.SetBool("isWalking", false);
         }
+    }
+
+    private void PlayWalkSound()
+    {
+        _audioSource.volume = 0.2f;
+        _audioSource.pitch = 0.4f;
+        _audioSource.clip = walkClip;
+        _audioSource.Play();
+    }
+
+    private void PlayJumpSound()
+    {
+        _audioSource.volume = 1.0f;
+        _audioSource.pitch = 1.0f;
+        _audioSource.clip = jumpClip;
+        _audioSource.Play();
     }
 
     private void FixedUpdate()

@@ -26,9 +26,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject lifePrefab;
     
     public bool _canTakeDamage = true;
+    public AudioClip hurtClip;
+    public AudioClip deathClip;
     
     private Animator _playerAnimator;
     private SpriteRenderer _playerSprite;
+    private AudioSource _audioSource;
 
     // Cached property index
     private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
@@ -37,6 +40,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerAnimator = GetComponent<Animator>();
         _playerSprite = GetComponent<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -80,9 +84,26 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    
+    private void PlayHurtSound()
+    {
+        _audioSource.volume = 0.7f;
+        _audioSource.pitch = 1f;
+        _audioSource.clip = hurtClip;
+        _audioSource.Play();
+    }
+    
+    private void PlayDeathSound()
+    {
+        _audioSource.volume = 0.7f;
+        _audioSource.pitch = 1f;
+        _audioSource.clip = deathClip;
+        _audioSource.Play();
+    }
 
     IEnumerator Death()
     {
+        PlayDeathSound();
         GetComponent<Rigidbody2D>().AddForce(Vector2.up * 25, ForceMode2D.Impulse);
         Time.timeScale = 0.2f;
         screenBackground.color = new Color(1, 0, 0, 0.4f);
@@ -122,6 +143,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator Invincibility()
     {
         _canTakeDamage = false;
+        PlayHurtSound();
         Color normalColor = Color.white;
         Color hitColor = Color.clear;
 

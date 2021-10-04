@@ -33,11 +33,17 @@ public class GorillaController : MonoBehaviour
     private bool _invincibility = false;
 
     private Animator _gorillaAnimator;
+    private AudioSource _audioSource;
+
+    public AudioClip smashClip;
+    public AudioClip hurtClip;
+    public AudioClip enrageClip;
 
     private void Start()
     {
         _gorillaAnimator = GetComponent<Animator>();
         _gorillaSprite = GetComponentInChildren<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
         
         leftRopeAnchor = GameObject.FindGameObjectWithTag("LeftAnchor").transform;
         rightRopeAnchor = GameObject.FindGameObjectWithTag("RightAnchor").transform;
@@ -70,12 +76,43 @@ public class GorillaController : MonoBehaviour
             StartCoroutine(BigSmash());
         }
     }
+    
+    private void PlayHurtSound()
+    {
+        if (!_audioSource.isPlaying)
+        {
+            _audioSource.volume = 0.7f;
+            _audioSource.pitch = 1f;
+            _audioSource.clip = hurtClip;
+            _audioSource.loop = false;
+            _audioSource.Play();
+        }
+    }
+    
+    private void PlaySmashSound()
+    {
+        _audioSource.volume = 1.3f;
+        _audioSource.pitch = 1f;
+        _audioSource.clip = smashClip;
+        _audioSource.loop = false;
+        _audioSource.Play();
+    }
+
+    private void PlayEnrageSound()
+    {
+        _audioSource.volume = 0.8f;
+        _audioSource.pitch = 1f;
+        _audioSource.clip = enrageClip;
+        _audioSource.loop = true;
+        _audioSource.Play();
+    }
 
     IEnumerator BigSmash()
     {
         _invincibility = true;
         _isSmashing = true;
         _gorillaAnimator.SetTrigger("big_smash");
+        PlayEnrageSound();
         yield return new WaitForSeconds(2.1f);
         
         _gorillaAnimator.SetTrigger("instant_smash");
@@ -113,6 +150,7 @@ public class GorillaController : MonoBehaviour
     {
         _isSmashing = true;
         _gorillaAnimator.SetTrigger("smash");
+        PlayEnrageSound();
         yield return null;
         _isSmashing = false;
     }
@@ -154,6 +192,7 @@ public class GorillaController : MonoBehaviour
     
     IEnumerator Damaged()
     {
+        PlayHurtSound();
         Color normalColor = Color.white;
         Color hitColor = Color.clear;
 

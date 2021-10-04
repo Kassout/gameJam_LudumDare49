@@ -6,10 +6,13 @@ public class GameManager : MonoBehaviour
 {
     public GameObject startingUI;
     public float transitionTime = 0.3f;
+
+    private AudioSource _audioSource;
     
     // Start is called before the first frame update
     void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         Time.timeScale = 0;
     }
 
@@ -18,6 +21,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            _audioSource.Play();
             StartCoroutine(StartGame());
         }
     }

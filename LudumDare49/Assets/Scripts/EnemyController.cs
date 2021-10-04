@@ -34,12 +34,18 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int life = 1;
     public int scoreValue = 50;
     private bool _isDead = false;
+
+    private AudioSource _audioSource;
+
+    public AudioClip attackClip;
+    public AudioClip hurtClip;
     
     // Start is called before the first frame update
     void Start()
     {
         _enemyRigidbody = GetComponent<Rigidbody2D>();
         _enemyColliders = GetComponents<Collider2D>().ToList();
+        _audioSource = GetComponent<AudioSource>();
         _player = FindObjectOfType<PlayerController>().gameObject;
         atkCooldown = atkCooldownValue;
     }
@@ -73,6 +79,22 @@ public class EnemyController : MonoBehaviour
     }
     
     private Vector3 _velocity = Vector3.zero;
+    
+    private void PlayHurtSound()
+    {
+        _audioSource.volume = 0.7f;
+        _audioSource.pitch = 1f;
+        _audioSource.clip = hurtClip;
+        _audioSource.Play();
+    }
+    
+    private void PlayAttackSound()
+    {
+        _audioSource.volume = 0.7f;
+        _audioSource.pitch = 1f;
+        _audioSource.clip = attackClip;
+        _audioSource.Play();
+    }
 
     void FixedUpdate()
     {
@@ -139,6 +161,7 @@ public class EnemyController : MonoBehaviour
 
         if (!_isDead)
         {
+            PlayAttackSound();
             animator.SetTrigger("attack");
 
             yield return new WaitForSeconds(0.30f);
@@ -169,10 +192,11 @@ public class EnemyController : MonoBehaviour
             _isDead = true;
             foreach (var collider2D in _enemyColliders)
             {
-                collider2D.enabled = false;
+                collider2D.isTrigger = true;
             }
             float deathForceMagnitude = Random.Range(50, 150);
             _enemyRigidbody.AddForce(Vector2.up * deathForceMagnitude, ForceMode2D.Impulse);
+            PlayHurtSound();
             animator.SetTrigger("death");
         }
 

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -13,15 +12,19 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private LayerMask whatIsEnemies;
     [SerializeField] private GameObject scoreUI;
     
+    public AudioClip attackClip;
+    
     private float _timeBtwAttack = 0.0f;
     private PlayerController _playerController;
     private Animator _playerAnimator;
+    private AudioSource _audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         _playerController = GetComponent<PlayerController>();
         _playerAnimator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -46,6 +49,7 @@ public class PlayerAttack : MonoBehaviour
     IEnumerator Attack()
     {
         _playerAnimator.SetTrigger("attack");
+        PlayAttackSound();
 
         yield return new WaitForSeconds(0.15f);
         Collider2D[] enemiesToDamage =
@@ -72,6 +76,14 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void PlayAttackSound()
+    {
+        _audioSource.volume = 0.7f;
+        _audioSource.pitch = 1f;
+        _audioSource.clip = attackClip;
+        _audioSource.Play();
     }
     
     private void OnDrawGizmosSelected()
