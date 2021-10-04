@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,6 +20,8 @@ public class GorillaController : MonoBehaviour
     
     public Transform leftRopeAnchor;
     public Transform rightRopeAnchor;
+    public GameObject SFX;
+    [SerializeField] private int SFXNumber = 10;
 
     private List<Rigidbody2D> _jointRbs;
     private SpriteRenderer _gorillaSprite;
@@ -131,7 +134,7 @@ public class GorillaController : MonoBehaviour
     
     public bool TakeDamage(int damage)
     {
-        if (!_invincibility)
+        if (!_invincibility && !isDead)
         {
             _life -= damage;
             if (_life <= 0)
@@ -168,7 +171,16 @@ public class GorillaController : MonoBehaviour
     IEnumerator Die()
     {
         isDead = true;
-        _gorillaAnimator.SetTrigger("death");
+        
+        for (int i = 0; i < SFXNumber; i++)
+        {
+            Vector2 sfxPosition = (Vector2) transform.position + new Vector2(Random.Range(_gorillaSprite.bounds.min.x + 7.5f, _gorillaSprite.bounds.max.x - 7.5f),
+                Random.Range(_gorillaSprite.bounds.min.y, _gorillaSprite.bounds.max.y - 5));
+            float sfxScale = Random.Range(1, 4);
+            SFX.transform.localScale = new Vector3(sfxScale, sfxScale, 0);
+            Instantiate(SFX, sfxPosition, quaternion.identity);
+            yield return new WaitForSeconds(0.1f);
+        }
 
         yield return new WaitForSeconds(deathAnimationDuration);
         

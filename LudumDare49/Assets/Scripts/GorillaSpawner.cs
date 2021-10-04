@@ -7,7 +7,7 @@ public class GorillaSpawner : MonoBehaviour
     public GameObject gorilla;
     [SerializeField] private float spawnDelay = 120.0f;
 
-    [SerializeField] private float _spawnCountDown;
+    private float _spawnCountDown;
     private bool _countDownTrigger = true;
     private GameObject currentGorilla;
 

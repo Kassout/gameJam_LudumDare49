@@ -229,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreValue: 300
   isDead: 0
-  deathAnimationDuration: 3
+  deathAnimationDuration: 1
   maxLeftPosition: -8.5
   maxRightPosition: 8.5
   maxLives: 35
@@ -237,6 +237,8 @@ MonoBehaviour:
   impactForceMagnitude: 300
   leftRopeAnchor: {fileID: 0}
   rightRopeAnchor: {fileID: 0}
+  SFX: {fileID: 4022961626317172501, guid: a779c32c7aed2c54eaccd9a0ee2ac6eb, type: 3}
+  SFXNumber: 30
 --- !u!1 &7481859408085450792
 GameObject:
   m_ObjectHideFlags: 0
