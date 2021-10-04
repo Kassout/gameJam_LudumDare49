@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - LeftAnchor
   - RightAnchor
+  - PowerUp
   layers:
   - Default
   - TransparentFX

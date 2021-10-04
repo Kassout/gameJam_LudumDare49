@@ -6,7 +6,7 @@ public class GorillaFistDamage : MonoBehaviour
     [SerializeField] private float forceAmplitude = 150.0f;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             if (collision.gameObject.GetComponent<PlayerController>()._canTakeDamage)
             {

@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class SpawnerController : MonoBehaviour
 {
     public Transform player;
-    public GameObject toSpawnPrefab;
+    public GameObject[] toSpawnPrefab;
     public SpawnDirection spawnDirection;
 
     public static bool stopSpawn = false;
@@ -79,8 +79,10 @@ public class SpawnerController : MonoBehaviour
     IEnumerator SpawnObject()
     {
         float spawnForce = Random.Range(minSpawnForce, maxSpawnForce);
-        GameObject spawnedObject = Instantiate(toSpawnPrefab, transform.position, Quaternion.identity);
-        if (spawnedObject.CompareTag("Enemy"))
+        int toSpawnIndex = Random.Range(0, 100) > 20 ? 0 : 1;
+        
+        GameObject spawnedObject = Instantiate(toSpawnPrefab[toSpawnIndex], transform.position, Quaternion.identity);
+        if (spawnedObject.GetComponent<Rigidbody2D>())
         {
             Rigidbody2D spawnedObjectRb = spawnedObject.GetComponent<Rigidbody2D>();
             spawnedObjectRb.AddForce(_direction * spawnForce, ForceMode2D.Impulse);
