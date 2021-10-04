@@ -66,9 +66,9 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Invincibility());
                 for (int i = 0; i < damage; i++)
                 {
-                    if (lifeUI.transform.GetChild(i))
+                    if (lifeUI.transform.GetChild((lifeUI.transform.childCount - 1) - i))
                     {
-                        Destroy(lifeUI.transform.GetChild(i).gameObject);
+                        Destroy(lifeUI.transform.GetChild((lifeUI.transform.childCount - 1) - i).gameObject);
                     }
                 }
             }
