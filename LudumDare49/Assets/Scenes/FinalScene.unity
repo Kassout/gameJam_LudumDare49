@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 214224310}
   - component: {fileID: 214224309}
   - component: {fileID: 214224308}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -830,7 +830,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9ea1502f3218555469ac2f2f8adb27bb, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
