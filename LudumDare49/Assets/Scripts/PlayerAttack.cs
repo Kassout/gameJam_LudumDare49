@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -30,32 +31,8 @@ public class PlayerAttack : MonoBehaviour
         {
             // Then you can attack
             if (Input.GetButtonDown("Fire1") && _playerController.isGrounded)
-            { 
-                _playerAnimator.SetTrigger("attack");
-                Collider2D[] enemiesToDamage =
-                    Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), whatIsEnemies);
-                for (int i = 0; i < enemiesToDamage.Length; i++)
-                {
-                    if (enemiesToDamage[i].GetComponent<EnemyController>())
-                    {
-                        EnemyController enemy = enemiesToDamage[i].GetComponent<EnemyController>();
-                        bool isDead = enemy.TakeDamage(damage);
-                        if (isDead)
-                        {
-                            StartCoroutine(scoreUI.GetComponent<ScoreController>().AddScore(enemy.scoreValue));
-                        }
-                    }
-
-                    if (enemiesToDamage[i].GetComponent<GorillaController>())
-                    {
-                        GorillaController gorillaController = enemiesToDamage[i].GetComponent<GorillaController>();
-                        bool isDead = gorillaController.TakeDamage(damage);
-                        if (isDead)
-                        {
-                            StartCoroutine(scoreUI.GetComponent<ScoreController>().AddScore(gorillaController.scoreValue));
-                        }
-                    }
-                }
+            {
+                StartCoroutine(Attack());
                 
                 _timeBtwAttack = startTimeBtwAttack;
             }
@@ -66,6 +43,37 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    IEnumerator Attack()
+    {
+        _playerAnimator.SetTrigger("attack");
+
+        yield return new WaitForSeconds(0.15f);
+        Collider2D[] enemiesToDamage =
+            Physics2D.OverlapBoxAll(attackPos.position, new Vector2(attackRangeX, attackRangeY), whatIsEnemies);
+        for (int i = 0; i < enemiesToDamage.Length; i++)
+        {
+            if (enemiesToDamage[i].GetComponent<EnemyController>())
+            {
+                EnemyController enemy = enemiesToDamage[i].GetComponent<EnemyController>();
+                bool isDead = enemy.TakeDamage(damage);
+                if (isDead)
+                {
+                    StartCoroutine(scoreUI.GetComponent<ScoreController>().AddScore(enemy.scoreValue));
+                }
+            }
+
+            if (enemiesToDamage[i].GetComponent<GorillaController>())
+            {
+                GorillaController gorillaController = enemiesToDamage[i].GetComponent<GorillaController>();
+                bool isDead = gorillaController.TakeDamage(damage);
+                if (isDead)
+                {
+                    StartCoroutine(scoreUI.GetComponent<ScoreController>().AddScore(gorillaController.scoreValue));
+                }
+            }
+        }
+    }
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

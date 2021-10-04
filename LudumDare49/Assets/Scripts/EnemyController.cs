@@ -141,6 +141,7 @@ public class EnemyController : MonoBehaviour
         {
             animator.SetTrigger("attack");
 
+            yield return new WaitForSeconds(0.30f);
             GameObject instance = Instantiate(hitBox, atkPos.position, Quaternion.identity, transform);
             instance.GetComponent<HitBox>().origin = this;
             Destroy(instance, atkTimer);

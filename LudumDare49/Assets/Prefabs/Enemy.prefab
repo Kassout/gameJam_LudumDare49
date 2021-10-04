@@ -199,7 +199,7 @@ MonoBehaviour:
   hitBox: {fileID: 2065576419188655416, guid: cf12b8b51c55bdc45b856aadacc5b79b, type: 3}
   atkPos: {fileID: 3935425760459426363}
   atkTimer: 0.5
-  attackWindowDelay: 0.3
+  attackWindowDelay: 0.15
   atkCooldownValue: 2
   attacking: 0
   life: 1
