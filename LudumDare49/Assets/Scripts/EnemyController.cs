@@ -69,6 +69,8 @@ public class EnemyController : MonoBehaviour
             atkCooldown -= Time.deltaTime;
         }
     }
+    
+    private Vector3 _velocity = Vector3.zero;
 
     void FixedUpdate()
     {
@@ -78,7 +80,12 @@ public class EnemyController : MonoBehaviour
             {
                 if (!collidingWithAura)
                 {
-                    _enemyRigidbody.AddForce(-_directionOfPlayer * movementSpeed * _enemyRigidbody.mass);
+                    // Move the character by finding the target velocity
+                    Vector3 targetVelocity = -_directionOfPlayer * new Vector2( movementSpeed * Time.fixedDeltaTime, _enemyRigidbody.velocity.y);
+                    // And then smoothing it out and applying it to the character
+                    _enemyRigidbody.velocity = Vector3.SmoothDamp(_enemyRigidbody.velocity, targetVelocity, ref _velocity, 0.05f);
+
+                    //_enemyRigidbody.MovePosition(-_directionOfPlayer * movementSpeed * Time.fixedDeltaTime);
                     animator.SetBool("isWalking", true);
                 }
                 else
