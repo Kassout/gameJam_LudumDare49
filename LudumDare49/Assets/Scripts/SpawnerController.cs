@@ -65,7 +65,7 @@ public class SpawnerController : MonoBehaviour
                 }
             
                 // Should the spawn rate increase?
-                if (spawnRateCountdown < 0 && spawnDelay > 1 && spawnQuantity < 4)
+                if (spawnRateCountdown < 0 && spawnDelay > 1.8f && spawnQuantity < 4)
                 {
                     spawnRateCountdown += timeUntilSpawnRateIncrease;
                     if (Random.Range(0, 100) >= spawnQuantityIncreaseChance && spawnDelay > 1)

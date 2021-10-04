@@ -52,6 +52,6 @@ MonoBehaviour:
   maxSpawnForce: 150
   spawnDelay: 3
   spawnQuantity: 1
-  spawnQuantityIncreaseChance: 20
-  timeUntilSpawnRateIncrease: 30
+  spawnQuantityIncreaseChance: 15
+  timeUntilSpawnRateIncrease: 25
   minSpawnDistance: 17
