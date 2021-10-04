@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     
     // A mask determining what is ground to the character
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private Image screenBackground;
     
     // A position marking where to check if the player is grounded.
     [SerializeField] private Transform groundCheckTransform;
@@ -74,9 +76,21 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Destroy(this);
+                StartCoroutine(Death());
             }
         }
+    }
+
+    IEnumerator Death()
+    {
+        GetComponent<Rigidbody2D>().AddForce(Vector2.up * 25, ForceMode2D.Impulse);
+        Time.timeScale = 0.2f;
+        screenBackground.color = new Color(1, 0, 0, 0.4f);
+        
+        yield return new WaitForSecondsRealtime(2.0f);
+        
+        screenBackground.color = Color.clear;
+        Destroy(this);
     }
 
     public void TakePowerUp(int heal)
