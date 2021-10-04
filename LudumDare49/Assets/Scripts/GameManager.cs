@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour
 {
     public GameObject startingUI;
     public float transitionTime = 0.3f;
-    public MusicPlayer musicPlayer;
     
     // Start is called before the first frame update
     void Start()
@@ -26,9 +25,9 @@ public class GameManager : MonoBehaviour
     IEnumerator StartGame()
     {
         startingUI.GetComponentInChildren<Animator>().SetTrigger("startGame");
+        MusicPlayer.Instance.Switch();
         yield return new WaitForSecondsRealtime(transitionTime);
         Time.timeScale = 1;
-        SceneManager.LoadScene(1);
-        musicPlayer.Switch();
+        SceneManager.LoadScene(2);
     }
 }

@@ -1,8 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
+    public static MusicPlayer Instance { get; private set; }
+
     public AudioSource source;
 
     public AudioClip currentClip;
@@ -10,13 +13,22 @@ public class MusicPlayer : MonoBehaviour
     public AudioClip highIntensityClip;
     public AudioClip lowIntensityClip;
     public AudioClip transitionClip;
-
-    private void Start()
+    public AudioClip startScreenClip;
+    
+    private void Awake()
     {
-        if (!FindObjectOfType<MusicPlayer>())
+        // Singleton
+        if (null == Instance)
         {
-            DontDestroyOnLoad(gameObject);
+            Instance = this;
         }
+        else
+        {
+            Debug.Log("Warning: multiple " + this + " in scene!");
+        }
+        
+        DontDestroyOnLoad(gameObject);
+        SceneManager.LoadScene(1);
     }
 
     public void Switch()
@@ -24,22 +36,31 @@ public class MusicPlayer : MonoBehaviour
         if(currentClip == lowIntensityClip)
         {
             StartCoroutine(PlaySound(highIntensityClip,false));
-            currentClip = highIntensityClip;
         }
         else if (currentClip == highIntensityClip)
         {
             StartCoroutine(PlaySound(lowIntensityClip,true));
-            highIntensityClip = lowIntensityClip;
         }
         else
         {
             StartCoroutine(PlaySound(lowIntensityClip,false));
-            currentClip = lowIntensityClip;
         }
     }
 
     public IEnumerator PlaySound(AudioClip toPlay, bool transition)
     {
+        currentClip = toPlay;
+        
+        float startVolume = source.volume;
+ 
+        while (source.volume > 0) {
+            source.volume -= startVolume * Time.deltaTime / 1.5f;
+ 
+            yield return null;
+        }
+        source.Stop();
+        source.volume = startVolume;
+        
         if (transition)
         {
             yield return null;

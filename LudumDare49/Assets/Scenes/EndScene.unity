@@ -308,7 +308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 821342294}
   m_Layer: 5
-  m_Name: Start Message
+  m_Name: End Message
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
