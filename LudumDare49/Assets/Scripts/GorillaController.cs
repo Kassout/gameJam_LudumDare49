@@ -86,7 +86,8 @@ public class GorillaController : MonoBehaviour
         
         _gorillaAnimator.SetTrigger("instant_smash");
         yield return new WaitForSeconds(1f);
-        
+
+        startTimeBtwAttack /= 2;
         _timeBtwAttack = startTimeBtwAttack;
         _isSmashing = false;
         _invincibility = false;
