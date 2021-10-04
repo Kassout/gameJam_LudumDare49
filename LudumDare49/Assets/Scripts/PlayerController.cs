@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSecondsRealtime(2.0f);
         
         screenBackground.color = Color.clear;
+        Time.timeScale = 1.0f;
         Destroy(this);
     }
 
