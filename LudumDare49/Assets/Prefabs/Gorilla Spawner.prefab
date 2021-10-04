@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gorilla: {fileID: 7229506107746298823, guid: a09b0233b121fe349a9bbec394504c4b, type: 3}
-  spawnDelay: 60
+  spawnDelay: 10

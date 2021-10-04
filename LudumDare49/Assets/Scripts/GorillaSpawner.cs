@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,9 +10,10 @@ public class GorillaSpawner : MonoBehaviour
 
     private float _spawnCountDown;
     private bool _countDownTrigger = true;
-    private GameObject currentGorilla;
+    private GameObject _currentGorilla;
 
     private bool _firstTimeSpawn = true;
+    private bool _hasStartedSpawn = false;
     
     // Start is called before the first frame update
     void Start()
@@ -31,20 +33,34 @@ public class GorillaSpawner : MonoBehaviour
                     SpawnerController.stopSpawn = true;
                     _firstTimeSpawn = false;
                 }
-                
-                currentGorilla = Instantiate(gorilla);
-                currentGorilla.transform.SetParent(transform);
 
                 _countDownTrigger = false;
+                
+                StartCoroutine(SpawnGorilla());
+                
                 _spawnCountDown = spawnDelay;
             }
             
             _spawnCountDown -= Time.unscaledDeltaTime;
         }
 
-        if (!currentGorilla)
+        if (!_currentGorilla && !_hasStartedSpawn)
         {
             _countDownTrigger = true;
         }
+    }
+
+    IEnumerator SpawnGorilla()
+    {
+        _hasStartedSpawn = true;
+        MusicPlayer.Instance.Switch();
+
+        yield return new WaitForSeconds(1.5f);
+        
+        _currentGorilla = Instantiate(gorilla);
+        
+        _hasStartedSpawn = false;
+        
+        _currentGorilla.transform.SetParent(transform);
     }
 }

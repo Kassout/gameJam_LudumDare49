@@ -172,6 +172,7 @@ public class GorillaController : MonoBehaviour
     IEnumerator Die()
     {
         isDead = true;
+        MusicPlayer.Instance.Switch(false);
         
         for (int i = 0; i < SFXNumber; i++)
         {
