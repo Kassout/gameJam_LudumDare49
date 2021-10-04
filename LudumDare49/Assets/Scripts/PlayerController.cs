@@ -60,9 +60,9 @@ public class PlayerController : MonoBehaviour
     {
         if (_canTakeDamage)
         {
-            life -= damage;
-            if (life > 0)
+            if (life - damage > 0)
             {
+                life -= damage;
                 StartCoroutine(Invincibility());
                 for (int i = 0; i < damage; i++)
                 {
@@ -81,9 +81,9 @@ public class PlayerController : MonoBehaviour
 
     public void TakePowerUp(int heal)
     {
-        life += heal;
-        if (life < maxLife)
+        if (life + heal <= maxLife)
         {
+            life += heal;
             for (int i = 0; i < heal; i++)
             {
                 StartCoroutine(Heal()); 
