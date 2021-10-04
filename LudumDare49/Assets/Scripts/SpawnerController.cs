@@ -31,6 +31,8 @@ public class SpawnerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stopSpawn = false;
+        
         _direction = spawnDirection == SpawnDirection.Left ? Vector2.left : Vector2.right;
 
         StartCoroutine(SpawnLoop(spawnDelay));
