@@ -64,7 +64,7 @@ public class GorillaController : MonoBehaviour
             }
         }
 
-        if (_life == 15 && !_hasEnrage)
+        if (_life == 10 && !_hasEnrage)
         {
             _hasEnrage = true;
             StartCoroutine(BigSmash());

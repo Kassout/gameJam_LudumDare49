@@ -15474,7 +15474,7 @@ MonoBehaviour:
   attackRangeX: 1
   attackRangeY: 1
   attackPos: {fileID: 1214419284}
-  startTimeBtwAttack: 0.3
+  startTimeBtwAttack: 0.8
   whatIsEnemies:
     serializedVersion: 2
     m_Bits: 8

@@ -81,7 +81,7 @@ public class SpawnerController : MonoBehaviour
     IEnumerator SpawnObject()
     {
         float spawnForce = Random.Range(minSpawnForce, maxSpawnForce);
-        int toSpawnIndex = Random.Range(0, 100) > 20 ? 0 : 1;
+        int toSpawnIndex = Random.Range(0, 100) > 10 ? 0 : 1;
         
         GameObject spawnedObject = Instantiate(toSpawnPrefab[toSpawnIndex], transform.position, Quaternion.identity);
         if (spawnedObject.GetComponent<Rigidbody2D>())
