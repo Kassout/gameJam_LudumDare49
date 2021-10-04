@@ -1782,6 +1782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingUI: {fileID: 1939129578}
   transitionTime: 0.3
+  musicPlayer: {fileID: 0}
 --- !u!4 &268312061
 Transform:
   m_ObjectHideFlags: 0
@@ -22302,6 +22303,7 @@ GameObject:
   - component: {fileID: 1153089890}
   - component: {fileID: 1153089892}
   - component: {fileID: 1153089893}
+  - component: {fileID: 1153089894}
   m_Layer: 9
   m_Name: Enemy Gorilla
   m_TagString: Untagged
@@ -22348,7 +22350,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 6767971171033279790, guid: c39511c34066b124db09503019234706, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -22409,6 +22411,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0.3, y: -2.5}
   m_Size: {x: 12, y: 20}
   m_Direction: 0
+--- !u!114 &1153089894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1153089889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d183e54d8595c23459c34e5a28cd70c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLeft: 0
+  maxRight: 0
 --- !u!1 &1160755246
 GameObject:
   m_ObjectHideFlags: 0

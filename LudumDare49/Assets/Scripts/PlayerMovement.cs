@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_playerController.isGrounded)
         {
-            if (Input.GetButtonDown("Jump") || Input.GetKey(KeyCode.W))
+            if (Input.GetButtonDown("Jump"))
             {
                 _playerController.isGrounded = false;
                 _playerRigidbody.AddForce(Vector2.up * jumpForce);
@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         // If the player should continue to jump...
         if (_isJumping)
         {
-            if (Input.GetButton("Jump") || Input.GetKey(KeyCode.W))
+            if (Input.GetButton("Jump"))
             {
                 if (_jumpTimeCounter > 0)
                 {

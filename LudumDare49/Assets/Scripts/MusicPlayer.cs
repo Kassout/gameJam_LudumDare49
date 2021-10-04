@@ -13,7 +13,10 @@ public class MusicPlayer : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        if (!FindObjectOfType<MusicPlayer>())
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     public void Switch()

@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     
     private bool _facingRight;
-    private Vector3 _directionOfPlayer;
+    public Vector3 _directionOfPlayer;
     private bool _isGrounded = false;
     
     private GameObject _player;
@@ -79,9 +79,11 @@ public class EnemyController : MonoBehaviour
                 if (!collidingWithAura)
                 {
                     _enemyRigidbody.AddForce(-_directionOfPlayer * movementSpeed * _enemyRigidbody.mass);
+                    animator.SetBool("isWalking", true);
                 }
                 else
                 {
+                    animator.SetBool("isGrounded", true);
                     if (!attacking && atkCooldown <= 0)
                     {
                         Attack();
@@ -127,6 +129,7 @@ public class EnemyController : MonoBehaviour
         GameObject instance = Instantiate(hitBox, atkPos.position, Quaternion.identity, transform);
         instance.GetComponent<HitBox>().origin = this;
         Destroy(instance, atkTimer);
+        animator.Play("attack");
     }
 
     private void Flip()

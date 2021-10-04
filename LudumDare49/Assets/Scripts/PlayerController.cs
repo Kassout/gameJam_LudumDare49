@@ -7,8 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     // Whether or not the player is grounded.
     [HideInInspector] public bool isGrounded;
-    
-    [SerializeField] private int life = 3;
+
+    [SerializeField] public int life = 3;
     [SerializeField] private int maxLife = 5;
     [SerializeField] private float invicibilityDuration = 1.0f;
     [SerializeField] private GameObject lifeUI;
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheckTransform;
     [SerializeField] private GameObject lifePrefab;
     
-    private bool _canTakeDamage = true;
+    public bool _canTakeDamage = true;
     
     private Animator _playerAnimator;
     private SpriteRenderer _playerSprite;
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
             life -= damage;
             if (life > 0)
             {
-                StartCoroutine(Invincibility(invicibilityDuration));
+                StartCoroutine(Invincibility());
                 for (int i = 0; i < damage; i++)
                 {
                     if (lifeUI.transform.GetChild(i))
@@ -103,13 +103,13 @@ public class PlayerController : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator Invincibility(float duration)
+    IEnumerator Invincibility()
     {
         _canTakeDamage = false;
         Color normalColor = Color.white;
         Color hitColor = Color.clear;
 
-        for (int i = 0; i < duration / 0.2f; i++)
+        for (int i = 0; i < invicibilityDuration / 0.2f; i++)
         {
             _playerSprite.material.color = hitColor;
             yield return new WaitForSeconds(0.1f);
