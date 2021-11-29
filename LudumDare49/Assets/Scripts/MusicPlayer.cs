@@ -2,19 +2,49 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// TODO: comments
+/// </summary>
 public class MusicPlayer : MonoBehaviour
 {
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public static MusicPlayer Instance { get; private set; }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioSource source;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip currentClip;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip highIntensityClip;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip lowIntensityClip;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip transitionClip;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip startScreenClip;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void Awake()
     {
         // Singleton
@@ -31,6 +61,10 @@ public class MusicPlayer : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="volumeTransition">TODO: comments</param>
     public void Switch(bool volumeTransition = true)
     {
         if(currentClip == lowIntensityClip)
@@ -47,11 +81,22 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="toPlay">TODO: comments</param>
     public void PlayClip(AudioClip toPlay)
     {
         StartCoroutine(PlaySound(toPlay,false));
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="toPlay">TODO: comments</param>
+    /// <param name="transition">TODO: comments</param>
+    /// <param name="volumeTransition">TODO: comments</param>
+    /// <returns>TODO: comments</returns>
     public IEnumerator PlaySound(AudioClip toPlay, bool transition, bool volumeTransition = true)
     {
         currentClip = toPlay;

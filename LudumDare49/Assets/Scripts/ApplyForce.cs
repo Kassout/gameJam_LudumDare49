@@ -2,20 +2,37 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// TODO: comments
+/// </summary>
 public class ApplyForce : MonoBehaviour
 {
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public Transform leftAnchor;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public Transform rightAnchor;
-
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private List<Rigidbody2D> jointRbs;
     
-    // Start is called before the first frame update
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     void Start()
     {
         jointRbs = GetComponentsInChildren<Rigidbody2D>().ToList();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     void Update()
     {
         if (Input.GetButtonDown("Fire1"))

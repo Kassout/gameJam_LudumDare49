@@ -5,40 +5,134 @@ using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// TODO: comments
+/// </summary>
 public class GorillaController : MonoBehaviour
 {
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public int scoreValue = 300;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [HideInInspector] public bool isDead = false;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float deathAnimationDuration = 3.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float maxLeftPosition;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float maxRightPosition;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private int maxLives = 25;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float startTimeBtwAttack = 10.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float impactForceMagnitude = 300.0f;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public Transform leftRopeAnchor;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public Transform rightRopeAnchor;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public GameObject SFX;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private int SFXNumber = 10;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private List<Rigidbody2D> _jointRbs;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private SpriteRenderer _gorillaSprite;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private int _life;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private float _timeBtwAttack = 0.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private bool _isSmashing = false;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private bool _hasEnrage = false;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private bool _invincibility = false;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private Animator _gorillaAnimator;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private AudioSource _audioSource;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip smashClip;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip hurtClip;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip enrageClip;
-
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void Start()
     {
         _gorillaAnimator = GetComponent<Animator>();
@@ -55,6 +149,9 @@ public class GorillaController : MonoBehaviour
         SetGorillaPosition();
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void Update()
     {
         if (!isDead && !_isSmashing)
@@ -77,6 +174,9 @@ public class GorillaController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void PlayHurtSound()
     {
         if (!_audioSource.isPlaying)
@@ -89,6 +189,9 @@ public class GorillaController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void PlaySmashSound()
     {
         _audioSource.volume = 1.3f;
@@ -98,6 +201,9 @@ public class GorillaController : MonoBehaviour
         _audioSource.Play();
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void PlayEnrageSound()
     {
         _audioSource.volume = 0.8f;
@@ -107,6 +213,10 @@ public class GorillaController : MonoBehaviour
         _audioSource.Play();
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
     IEnumerator BigSmash()
     {
         _invincibility = true;
@@ -130,6 +240,9 @@ public class GorillaController : MonoBehaviour
         _invincibility = false;
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void ApplyForce()
     {
         foreach (var rigidbody in _jointRbs)
@@ -146,6 +259,10 @@ public class GorillaController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
     IEnumerator Smash()
     {
         _isSmashing = true;
@@ -155,6 +272,9 @@ public class GorillaController : MonoBehaviour
         _isSmashing = false;
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void SetGorillaPosition()
     {
         float targetX = Random.Range(transform.position.x - 5, transform.position.x + 5);
@@ -171,6 +291,11 @@ public class GorillaController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="damage">TODO: comments</param>
+    /// <returns>TODO: comments</returns>
     public bool TakeDamage(int damage)
     {
         if (!_invincibility && !isDead)
@@ -190,6 +315,10 @@ public class GorillaController : MonoBehaviour
         return isDead;
     }
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
     IEnumerator Damaged()
     {
         PlayHurtSound();
@@ -208,6 +337,10 @@ public class GorillaController : MonoBehaviour
         _gorillaSprite.material.color = normalColor;
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
     IEnumerator Die()
     {
         isDead = true;

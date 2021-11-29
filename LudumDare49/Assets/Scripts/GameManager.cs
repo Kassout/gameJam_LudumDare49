@@ -2,21 +2,38 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// TODO: comments
+/// </summary>
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public GameObject startingUI;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public float transitionTime = 0.3f;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private AudioSource _audioSource;
     
-    // Start is called before the first frame update
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
         Time.timeScale = 0;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -26,6 +43,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
     IEnumerator StartGame()
     {
         startingUI.GetComponentInChildren<Animator>().SetTrigger("startGame");

@@ -1,25 +1,74 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// TODO: comments
+/// </summary>
 public class PlayerAttack : MonoBehaviour
 {
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public int damage = 1;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float attackRangeX = 1.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float attackRangeY = 1.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private Transform attackPos;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float startTimeBtwAttack;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private LayerMask whatIsEnemies;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private GameObject scoreUI;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip attackClip;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private float _timeBtwAttack = 0.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private PlayerController _playerController;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private Animator _playerAnimator;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private AudioSource _audioSource;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     void Start()
     {
         _playerController = GetComponent<PlayerController>();
@@ -27,7 +76,9 @@ public class PlayerAttack : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     void Update()
     {
         if (_timeBtwAttack <= 0)
@@ -46,6 +97,10 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
     IEnumerator Attack()
     {
         _playerAnimator.SetTrigger("attack");
@@ -78,6 +133,9 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void PlayAttackSound()
     {
         _audioSource.volume = 0.7f;
@@ -86,6 +144,9 @@ public class PlayerAttack : MonoBehaviour
         _audioSource.Play();
     }
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

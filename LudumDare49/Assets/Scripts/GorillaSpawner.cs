@@ -1,25 +1,57 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// TODO: comments
+/// </summary>
 public class GorillaSpawner : MonoBehaviour
 {
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public GameObject gorilla;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float spawnDelay = 120.0f;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private float _spawnCountDown;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private bool _countDownTrigger = true;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private GameObject _currentGorilla;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private bool _firstTimeSpawn = true;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private bool _hasStartedSpawn = false;
     
-    // Start is called before the first frame update
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     void Start()
     {
         _spawnCountDown = spawnDelay;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     void Update()
     {
         if (_countDownTrigger)
@@ -48,6 +80,10 @@ public class GorillaSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
     IEnumerator SpawnGorilla()
     {
         _hasStartedSpawn = true;

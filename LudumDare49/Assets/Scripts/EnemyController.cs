@@ -3,44 +3,144 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// TODO: comments
+/// </summary>
 public class EnemyController : MonoBehaviour
 {
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float movementSpeed = 3.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private bool checkGround = true;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private Transform groundCheck;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float groundedRadius = .2f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private LayerMask whatIsGround;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private bool _facingRight;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public Vector3 _directionOfPlayer;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private bool _isGrounded = false;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private GameObject _player;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private Rigidbody2D _enemyRigidbody;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private List<Collider2D> _enemyColliders;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public Animator animator;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public bool collidingWithAura;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public GameObject hitBox;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public Transform atkPos;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public float atkTimer;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float attackWindowDelay = 0.3f; // Time between collision with player trigger and attack hit box trigger
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [System.NonSerialized] public float atkCooldown = 0.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public float atkCooldownValue;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public bool attacking;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private int life = 1;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public int scoreValue = 50;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private bool _isDead = false;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private AudioSource _audioSource;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip attackClip;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip hurtClip;
     
-    // Start is called before the first frame update
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     void Start()
     {
         _enemyRigidbody = GetComponent<Rigidbody2D>();
@@ -50,6 +150,9 @@ public class EnemyController : MonoBehaviour
         atkCooldown = atkCooldownValue;
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void Update()
     {
         if (!_isDead)
@@ -78,8 +181,14 @@ public class EnemyController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private Vector3 _velocity = Vector3.zero;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void PlayHurtSound()
     {
         _audioSource.volume = 0.7f;
@@ -88,6 +197,9 @@ public class EnemyController : MonoBehaviour
         _audioSource.Play();
     }
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void PlayAttackSound()
     {
         _audioSource.volume = 0.7f;
@@ -96,6 +208,9 @@ public class EnemyController : MonoBehaviour
         _audioSource.Play();
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     void FixedUpdate()
     {
         if (!_isDead)
@@ -137,6 +252,10 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="collision">TODO: comments</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Aura"))
@@ -145,6 +264,10 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="collision">TODO: comments</param>
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Aura"))
@@ -153,6 +276,10 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
     IEnumerator Attack()
     {
         attacking = true;
@@ -173,6 +300,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void Flip()
     {
         // Switch the way the player is labelled as facing.
@@ -184,6 +314,11 @@ public class EnemyController : MonoBehaviour
         transform.localScale = theScale;
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="damage">TODO: comments</param>
+    /// <returns>TODO: comments</returns>
     public bool TakeDamage(int damage)
     {
         life -= damage;
