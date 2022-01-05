@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 
 /// <summary>
@@ -286,17 +287,26 @@ public class EnemyController : MonoBehaviour
 
         yield return new WaitForSeconds(attackWindowDelay);
 
+        GameObject instance = new GameObject();
         if (!_isDead)
         {
             PlayAttackSound();
             animator.SetTrigger("attack");
 
             yield return new WaitForSeconds(0.30f);
-            GameObject instance = Instantiate(hitBox, atkPos.position, Quaternion.identity, transform);
-            instance.GetComponent<HitBox>().origin = this;
-            Destroy(instance, atkTimer);
-        
+
+            if (!_isDead)
+            {
+                instance = Instantiate(hitBox, atkPos.position, Quaternion.identity, transform);
+                instance.GetComponent<HitBox>().origin = this;
+                Destroy(instance, atkTimer);
+            }
+
             atkCooldown = atkCooldownValue;
+        }
+        else
+        {
+            Destroy(instance);
         }
     }
 

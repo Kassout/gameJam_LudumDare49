@@ -720,7 +720,6 @@ GameObject:
   - component: {fileID: 144162038}
   - component: {fileID: 144162037}
   - component: {fileID: 144162036}
-  - component: {fileID: 144162040}
   m_Layer: 8
   m_Name: Chain
   m_TagString: Untagged
@@ -924,20 +923,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &144162040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 144162034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8d40d9a5cae15c4399c0d0e578333d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftAnchor: {fileID: 144162035}
-  rightAnchor: {fileID: 673227864}
 --- !u!1 &168307396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,6 +1169,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   scoreUI: {fileID: 0}
+  attackClip: {fileID: 0}
 --- !u!114 &188061245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1202,6 +1188,8 @@ MonoBehaviour:
   jumpTime: 0
   airControl: 1
   movementSmoothing: 0.05
+  walkClip: {fileID: 0}
+  jumpClip: {fileID: 0}
 --- !u!114 &188061246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,9 +1211,12 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 257
+  screenBackground: {fileID: 0}
   groundCheckTransform: {fileID: 2135644858}
   lifePrefab: {fileID: 7406768447180664273, guid: 54bc284caa02e8b409d40ba8d5f156bf, type: 3}
   _canTakeDamage: 1
+  hurtClip: {fileID: 0}
+  deathClip: {fileID: 0}
 --- !u!212 &188061247
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18667,7 +18658,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  toSpawnPrefab: {fileID: 3935425759777894423, guid: 2f3ad470c5bf538458fb9293843af8c2, type: 3}
+  toSpawnPrefab:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   spawnDirection: 0
   minSpawnForce: 50
   maxSpawnForce: 150

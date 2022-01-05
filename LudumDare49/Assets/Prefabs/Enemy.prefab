@@ -199,8 +199,8 @@ MonoBehaviour:
   collidingWithAura: 0
   hitBox: {fileID: 2065576419188655416, guid: cf12b8b51c55bdc45b856aadacc5b79b, type: 3}
   atkPos: {fileID: 3935425760459426363}
-  atkTimer: 0.5
-  attackWindowDelay: 0.15
+  atkTimer: 0.1
+  attackWindowDelay: 0.1
   atkCooldownValue: 2
   attacking: 0
   life: 1
