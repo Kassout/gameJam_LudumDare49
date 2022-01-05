@@ -67,9 +67,9 @@ public class PlayerAttack : MonoBehaviour
     private AudioSource _audioSource;
 
     /// <summary>
-    /// TODO: comments
+    /// This function is called on the frame when a script is enabled just before any of the Update methods are called the first time.
     /// </summary>
-    void Start()
+    private void Start()
     {
         _playerController = GetComponent<PlayerController>();
         _playerAnimator = GetComponent<Animator>();
@@ -77,14 +77,14 @@ public class PlayerAttack : MonoBehaviour
     }
 
     /// <summary>
-    /// TODO: comments
+    /// This function is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    void Update()
+    private void Update()
     {
         if (_timeBtwAttack <= 0)
         {
             // Then you can attack
-            if (Input.GetButtonDown("Fire1") && _playerController.isGrounded)
+            if (InputHandler.attackInput && _playerController.isGrounded)
             {
                 StartCoroutine(Attack());
                 

@@ -228,21 +228,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d183e54d8595c23459c34e5a28cd70c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreValue: 300
-  isDead: 0
-  deathAnimationDuration: 1
-  maxLeftPosition: -8.5
-  maxRightPosition: 8.5
-  maxLives: 25
-  startTimeBtwAttack: 10
-  impactForceMagnitude: 300
-  leftRopeAnchor: {fileID: 0}
-  rightRopeAnchor: {fileID: 0}
-  SFX: {fileID: 4022961626317172501, guid: a779c32c7aed2c54eaccd9a0ee2ac6eb, type: 3}
-  SFXNumber: 40
   smashClip: {fileID: 8300000, guid: 9a880a0f9b92e944dafc134e5c4097fa, type: 3}
   hurtClip: {fileID: 8300000, guid: 81af431f19997aa4cb327dfad08eeda6, type: 3}
   enrageClip: {fileID: 8300000, guid: 24cef356d604fa5458eb441674296f24, type: 3}
+  maxLives: 25
+  deathAnimationDuration: 1
+  scoreValue: 300
+  maxLeftPosition: -8.5
+  maxRightPosition: 8.5
+  attackCooldownTime: 10
+  impactForceMagnitude: 300
+  effectsBox: {fileID: 4022961626317172501, guid: a779c32c7aed2c54eaccd9a0ee2ac6eb, type: 3}
+  effectsNumber: 40
 --- !u!82 &2813344915346244484
 AudioSource:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4022961626317172497}
   - component: {fileID: 6273948572047443442}
   m_Layer: 0
-  m_Name: SFX
+  m_Name: Effects Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

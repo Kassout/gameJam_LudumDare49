@@ -2,57 +2,63 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// TODO: comments
+/// Class <c>GorillaSpawner</c> is a Unity component script used to manage the gorilla enemy spawner behavior.
 /// </summary>
 public class GorillaSpawner : MonoBehaviour
 {
+    #region Fields / Properties
+
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>gorillaPrefab</c> is a Unity <c>GameObject</c> representing the gorilla prefabricated object to spawn.
     /// </summary>
-    public GameObject gorilla;
+    [SerializeField] private GameObject gorillaPrefab;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>spawnDelay</c> represents the duration value between two gorilla enemy spawns.
     /// </summary>
     [SerializeField] private float spawnDelay = 120.0f;
 
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>spawnCountDown</c> represents the time before the last gorilla enemy spawn.
     /// </summary>
     private float _spawnCountDown;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>countDownTrigger</c> represents the starting trigger status of the gorilla enemy spawning count down.
     /// </summary>
     private bool _countDownTrigger = true;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>currentGorilla</c> is a Unity <c>GameObject</c> representing the current gorilla enemy game object.
     /// </summary>
     private GameObject _currentGorilla;
 
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>firstTimeSpawn</c> represents the first time spawning gorilla enemy status of the game.
     /// </summary>
     private bool _firstTimeSpawn = true;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>hasStartedSpawn</c> represents the starting spawn process status of the gorilla enemy.
     /// </summary>
-    private bool _hasStartedSpawn = false;
-    
+    private bool _hasStartedSpawn;
+
+    #endregion
+
+    #region MonoBehavior
+
     /// <summary>
-    /// TODO: comments
+    /// This function is called on the frame when a script is enabled just before any of the Update methods are called the first time.
     /// </summary>
-    void Start()
+    private void Start()
     {
         _spawnCountDown = spawnDelay;
     }
 
     /// <summary>
-    /// TODO: comments
+    /// This function is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    void Update()
+    private void Update()
     {
         if (_countDownTrigger)
         {
@@ -80,21 +86,25 @@ public class GorillaSpawner : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Private
+
     /// <summary>
-    /// TODO: comments
+    /// This function is responsible for managing the spawning gorilla enemy.
     /// </summary>
-    /// <returns>TODO: comments</returns>
-    IEnumerator SpawnGorilla()
+    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
+    private IEnumerator SpawnGorilla()
     {
         _hasStartedSpawn = true;
         MusicPlayer.Instance.Switch();
 
         yield return new WaitForSeconds(1.5f);
         
-        _currentGorilla = Instantiate(gorilla);
+        _currentGorilla = Instantiate(gorillaPrefab, transform, true);
         
         _hasStartedSpawn = false;
-        
-        _currentGorilla.transform.SetParent(transform);
     }
+
+    #endregion
 }

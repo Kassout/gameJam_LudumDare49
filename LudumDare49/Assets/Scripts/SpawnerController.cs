@@ -3,22 +3,69 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// TODO: comments
+/// </summary>
 public class SpawnerController : MonoBehaviour
 {
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public Transform player;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public GameObject[] toSpawnPrefab;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public SpawnDirection spawnDirection;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public static bool stopSpawn = false;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float minSpawnForce = 0.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float maxSpawnForce = 200.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float spawnDelay = 2.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private int spawnQuantity = 1;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float spawnQuantityIncreaseChance = 20.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float timeUntilSpawnRateIncrease = 30.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float minSpawnDistance = 5.0f;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [Serializable]
     public enum SpawnDirection
     {
@@ -26,10 +73,15 @@ public class SpawnerController : MonoBehaviour
         Right
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private Vector2 _direction;
     
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// This function is called on the frame when a script is enabled just before any of the Update methods are called the first time.
+    /// </summary>
+    private void Start()
     {
         stopSpawn = false;
         
@@ -38,7 +90,12 @@ public class SpawnerController : MonoBehaviour
         StartCoroutine(SpawnLoop(spawnDelay));
     }
 
-    IEnumerator SpawnLoop(float firstDelay)
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="firstDelay">TODO: comments</param>
+    /// <returns>TODO: comments</returns>
+    private IEnumerator SpawnLoop(float firstDelay)
     {
         float spawnRateCountdown = timeUntilSpawnRateIncrease;
         float spawnCountdown = firstDelay;
@@ -81,7 +138,11 @@ public class SpawnerController : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnObject()
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
+    private IEnumerator SpawnObject()
     {
         float spawnForce = Random.Range(minSpawnForce, maxSpawnForce);
         int toSpawnIndex = Random.Range(0, 100) > 10 ? 0 : 1;

@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d2f29ed638a3b4599499b5123c5328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gorilla: {fileID: 7229506107746298823, guid: a09b0233b121fe349a9bbec394504c4b, type: 3}
+  gorillaPrefab: {fileID: 7229506107746298823, guid: a09b0233b121fe349a9bbec394504c4b, type: 3}
   spawnDelay: 60

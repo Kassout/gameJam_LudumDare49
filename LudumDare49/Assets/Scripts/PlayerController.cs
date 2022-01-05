@@ -1,41 +1,106 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// TODO: comments
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     // Whether or not the player is grounded.
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [HideInInspector] public bool isGrounded;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] public int life = 3;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private int maxLife = 5;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float invicibilityDuration = 1.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private GameObject lifeUI;
     
     // Radius of the overlap circle to determine if grounded
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float groundedRadius = .2f; 
     
     // A mask determining what is ground to the character
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private LayerMask whatIsGround;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private Image screenBackground;
     
     // A position marking where to check if the player is grounded.
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private Transform groundCheckTransform;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private GameObject lifePrefab;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public bool _canTakeDamage = true;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip hurtClip;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     public AudioClip deathClip;
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private Animator _playerAnimator;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private SpriteRenderer _playerSprite;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private AudioSource _audioSource;
 
     // Cached property index
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
 
+    /// <summary>
+    /// This function is called on the frame when a script is enabled just before any of the Update methods are called the first time.
+    /// </summary>
     private void Start()
     {
         _playerAnimator = GetComponent<Animator>();
@@ -43,8 +108,10 @@ public class PlayerController : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// This function is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    private void Update()
     {
         isGrounded = false;
         _playerAnimator.SetBool(IsGrounded, isGrounded);
@@ -62,6 +129,10 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="damage">TODO: comments</param>
     public void TakeDamage(int damage)
     {
         if (_canTakeDamage)
@@ -85,6 +156,9 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void PlayHurtSound()
     {
         _audioSource.volume = 0.7f;
@@ -93,6 +167,9 @@ public class PlayerController : MonoBehaviour
         _audioSource.Play();
     }
     
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void PlayDeathSound()
     {
         _audioSource.volume = 0.7f;
@@ -101,7 +178,11 @@ public class PlayerController : MonoBehaviour
         _audioSource.Play();
     }
 
-    IEnumerator Death()
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
+    private IEnumerator Death()
     {
         PlayDeathSound();
         GetComponent<Rigidbody2D>().AddForce(Vector2.up * 25, ForceMode2D.Impulse);
@@ -116,6 +197,10 @@ public class PlayerController : MonoBehaviour
         Destroy(this);
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="heal">TODO: comments</param>
     public void TakePowerUp(int heal)
     {
         if (life + heal <= maxLife)
@@ -128,7 +213,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator Heal()
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
+    private IEnumerator Heal()
     {
         Transform lastChild = lifeUI.transform.GetChild(lifeUI.transform.childCount - 1);
         GameObject lifeObject = Instantiate(lifePrefab, lifePrefab.transform.position, Quaternion.identity);
@@ -140,7 +229,11 @@ public class PlayerController : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator Invincibility()
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
+    private IEnumerator Invincibility()
     {
         _canTakeDamage = false;
         PlayHurtSound();
@@ -160,6 +253,9 @@ public class PlayerController : MonoBehaviour
         _canTakeDamage = true;
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private void OnDestroy()
     {
         SceneManager.LoadScene(3);

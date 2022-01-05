@@ -1,16 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// TODO: comments
+/// Class <c>DestroyObjects</c> is a Unity component script used to manage the objects destroying behavior of the attached game object.
 /// </summary>
 public class DestroyObjects : MonoBehaviour
 {
     /// <summary>
-    /// TODO: comments
+    /// This function is called on trigger exit event, sent when another object leaves a trigger collider attached to this object
     /// </summary>
-    /// <param name="other">TODO: comments</param>
+    /// <param name="other">A Unity <c>Collider2D</c> component of the other game object involved in this collision.</param>
     private void OnTriggerExit2D(Collider2D other)
     {
-        Destroy(other.gameObject);
+        Destroy(other.transform.gameObject);
     }
 }

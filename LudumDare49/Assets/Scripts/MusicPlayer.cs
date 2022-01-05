@@ -3,47 +3,47 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// TODO: comments
+/// Class <c>MusicPlayer</c> is a Unity component script used to manage the general music plays behavior.
 /// </summary>
 public class MusicPlayer : MonoBehaviour
 {
     /// <summary>
-    /// TODO: comments
+    /// Singleton instance.
     /// </summary>
     public static MusicPlayer Instance { get; private set; }
 
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>audioSource</c> is a Unity <c>AudioSource</c> component representing the music player audio source.
     /// </summary>
-    public AudioSource source;
+    private AudioSource _audioSource;
 
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>currentClip</c> is a Unity <c>AudioClip</c> structure representing the currently playing audio clip on the music player.
     /// </summary>
-    public AudioClip currentClip;
+    [SerializeField] private AudioClip currentClip;
 
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>highIntensityClip</c> is a Unity <c>AudioClip</c> structure representing the high intensity theme clip.
     /// </summary>
-    public AudioClip highIntensityClip;
+    [SerializeField] private AudioClip highIntensityClip;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>lowIntensityClip</c> is a Unity <c>AudioClip</c> structure representing the low intensity theme clip.
     /// </summary>
-    public AudioClip lowIntensityClip;
+    [SerializeField] private AudioClip lowIntensityClip;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>transitionClip</c> is a Unity <c>AudioClip</c> structure representing the transition sound clip.
     /// </summary>
-    public AudioClip transitionClip;
+    [SerializeField] private AudioClip transitionClip;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>startScreenClip</c> is a Unity <c>AudioClip</c> structure representing the start screen sound clip.
     /// </summary>
     public AudioClip startScreenClip;
     
     /// <summary>
-    /// TODO: comments
+    /// This function is called when the script instance is being loaded.
     /// </summary>
     private void Awake()
     {
@@ -56,15 +56,16 @@ public class MusicPlayer : MonoBehaviour
         {
             Debug.Log("Warning: multiple " + this + " in scene!");
         }
-        
+
+        _audioSource = GetComponent<AudioSource>();
         DontDestroyOnLoad(gameObject);
         SceneManager.LoadScene(1);
     }
 
     /// <summary>
-    /// TODO: comments
+    /// This function is responsible for switching audio clip currently playing.
     /// </summary>
-    /// <param name="volumeTransition">TODO: comments</param>
+    /// <param name="volumeTransition">A boolean value representing the volume transition status of the switching process of the music player.</param>
     public void Switch(bool volumeTransition = true)
     {
         if(currentClip == lowIntensityClip)
@@ -82,73 +83,73 @@ public class MusicPlayer : MonoBehaviour
     }
 
     /// <summary>
-    /// TODO: comments
+    /// This function is responsible for playing a given audio clip.
     /// </summary>
-    /// <param name="toPlay">TODO: comments</param>
+    /// <param name="toPlay">A Unity <c>AudioClip</c> structure representing the audio clip to play by the music player.</param>
     public void PlayClip(AudioClip toPlay)
     {
         StartCoroutine(PlaySound(toPlay,false));
     }
 
     /// <summary>
-    /// TODO: comments
+    /// This function is responsible for playing a given audio clip with or without transition audio clip and with or without volume transition.
     /// </summary>
-    /// <param name="toPlay">TODO: comments</param>
-    /// <param name="transition">TODO: comments</param>
-    /// <param name="volumeTransition">TODO: comments</param>
-    /// <returns>TODO: comments</returns>
+    /// <param name="toPlay">A Unity <c>AudioClip</c> structure representing the audio clip to play by the music player.</param>
+    /// <param name="transition">A boolean value representing the transition status of the audio clip.</param>
+    /// <param name="volumeTransition">A boolean value representing the volume transition status of the audio clip.</param>
+    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
     public IEnumerator PlaySound(AudioClip toPlay, bool transition, bool volumeTransition = true)
     {
         currentClip = toPlay;
         
         if (volumeTransition)
         {
-            float startVolume = source.volume;
+            float startVolume = _audioSource.volume;
  
-            while (source.volume > 0) {
-                source.volume -= startVolume * Time.unscaledDeltaTime / 1.5f;
+            while (_audioSource.volume > 0) {
+                _audioSource.volume -= startVolume * Time.unscaledDeltaTime / 1.5f;
  
                 yield return null;
             }
-            source.Stop();
-            source.volume = startVolume;
+            _audioSource.Stop();
+            _audioSource.volume = startVolume;
         }
 
         if (transition)
         {
             yield return null;
             //2.Assign current AudioClip to audiosource
-            source.clip = transitionClip;
+            _audioSource.clip = transitionClip;
 
             //3.Play Audio
-            source.Play();
+            _audioSource.Play();
 
             bool isTransitioning = false;
             //4.Wait for it to finish playing
-            while (source.isPlaying && source.time < 6.0f)
+            while (_audioSource.isPlaying && _audioSource.time < 6.0f)
             {
-                source.loop = false;
+                _audioSource.loop = false;
                 yield return null;
                 
-                if (source.time > 4.0f && !isTransitioning)
+                if (_audioSource.time > 4.0f && !isTransitioning)
                 {
                     isTransitioning = true;
-                    float startVolume = source.volume;
+                    float startVolume = _audioSource.volume;
  
-                    while (source.volume > 0) {
-                        source.volume -= startVolume * Time.unscaledDeltaTime / 2.0f;
+                    while (_audioSource.volume > 0) {
+                        _audioSource.volume -= startVolume * Time.unscaledDeltaTime / 2.0f;
  
                         yield return null;
                     }
-                    source.Stop();
-                    source.volume = startVolume;
+                    _audioSource.Stop();
+                    _audioSource.volume = startVolume;
                 }
             }
         }
 
-        source.loop = true;
-        source.clip = toPlay;
-        source.Play();
+        _audioSource.loop = true;
+        _audioSource.clip = toPlay;
+        _audioSource.Play();
 
         yield return null;
     }

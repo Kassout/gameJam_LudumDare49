@@ -187,26 +187,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5249f08127b9d744973f4dda9fb0d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 200
-  checkGround: 1
-  groundCheck: {fileID: 3935425759244475997}
-  groundedRadius: 0.6
+  attackClip: {fileID: 8300000, guid: 89da356c6f9b98342b9a6215fea332b9, type: 3}
+  hurtClip: {fileID: 8300000, guid: 81af431f19997aa4cb327dfad08eeda6, type: 3}
+  groundCheckTransform: {fileID: 3935425759244475997}
+  groundCheckRadius: 0.6
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 257
-  _directionOfPlayer: {x: 0, y: 0, z: 0}
-  animator: {fileID: 3935425759777894408}
-  collidingWithAura: 0
-  hitBox: {fileID: 2065576419188655416, guid: cf12b8b51c55bdc45b856aadacc5b79b, type: 3}
-  atkPos: {fileID: 3935425760459426363}
-  atkTimer: 0.1
-  attackWindowDelay: 0.1
-  atkCooldownValue: 2
+    m_Bits: 256
+  movementSpeed: 200
+  directionOfPlayer: {x: 0, y: 0, z: 0}
+  hitBoxPrefab: {fileID: 2065576419188655416, guid: cf12b8b51c55bdc45b856aadacc5b79b, type: 3}
+  attackPosition: {fileID: 3935425760459426363}
+  attackWindowDuration: 0.1
+  attackWindowDelay: 0.2
+  attackCooldownTime: 2
   attacking: 0
   life: 1
   scoreValue: 50
-  attackClip: {fileID: 8300000, guid: 89da356c6f9b98342b9a6215fea332b9, type: 3}
-  hurtClip: {fileID: 8300000, guid: 81af431f19997aa4cb327dfad08eeda6, type: 3}
 --- !u!82 &8451040510330964871
 AudioSource:
   m_ObjectHideFlags: 0

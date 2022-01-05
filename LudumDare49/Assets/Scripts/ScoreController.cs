@@ -2,17 +2,40 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// TODO: comments
+/// </summary>
 public class ScoreController : MonoBehaviour
 {
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float scoreDelay = 10.0f;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private int scoreIncrement = 10;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     [SerializeField] private float timeUntilScoreIncrementIncrease = 30.0f;
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private Text _scoreUI;
+    
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
     private int _score = 0;
     
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// This function is called on the frame when a script is enabled just before any of the Update methods are called the first time.
+    /// </summary>
+    private void Start()
     {
         _scoreUI = GetComponent<Text>();
 
@@ -20,7 +43,12 @@ public class ScoreController : MonoBehaviour
         StartCoroutine(ScoreUpdate());
     }
 
-    IEnumerator ComputeScore(float scoreIncreaseDelay)
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="scoreIncreaseDelay">TODO: comments</param>
+    /// <returns>TODO: comments</returns>
+    private IEnumerator ComputeScore(float scoreIncreaseDelay)
     {
         float scoreIncrementCountdown = timeUntilScoreIncrementIncrease;
         float scoreCountDown = scoreIncreaseDelay;
@@ -47,7 +75,11 @@ public class ScoreController : MonoBehaviour
         }
     }
 
-    IEnumerator ScoreUpdate()
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <returns>TODO: comments</returns>
+    private IEnumerator ScoreUpdate()
     {
         int displayScore = int.Parse(_scoreUI.text.Split(':')[1]);
         while (true)
@@ -69,6 +101,11 @@ public class ScoreController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// TODO: comments
+    /// </summary>
+    /// <param name="amount">TODO: comments</param>
+    /// <returns>TODO: comments</returns>
     public IEnumerator AddScore(int amount)
     {
         _score += amount;

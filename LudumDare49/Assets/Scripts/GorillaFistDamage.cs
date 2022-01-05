@@ -1,24 +1,30 @@
 using UnityEngine;
 
 /// <summary>
-/// TODO: comments
+/// Class <c>GorillaFistDamage</c> is a Unity component script used to manage the gorilla enemy fist behaviour.
 /// </summary>
 public class GorillaFistDamage : MonoBehaviour
 {
+    #region Fields / Properties
+
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>damage</c> represents the quantity of damage received by the player on hit.
     /// </summary>
     [SerializeField] private int damage = 1;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>forceAmplitude</c> represents the force magnitude value of the gorilla attack smash impact over the player.
     /// </summary>
     [SerializeField] private float forceAmplitude = 150.0f;
-    
+
+    #endregion
+
+    #region MonoBehavior
+
     /// <summary>
-    /// TODO: comments
+    /// This function is called on trigger enter event, sent when another object entered a trigger collider attached to this object
     /// </summary>
-    /// <param name="collision">TODO: comments</param>
+    /// <param name="collision">A Unity <c>Collider2D</c> component of the other game object involved in this collision.</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -30,4 +36,6 @@ public class GorillaFistDamage : MonoBehaviour
             }
         }
     }
+
+    #endregion
 }
