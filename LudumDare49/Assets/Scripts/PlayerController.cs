@@ -163,25 +163,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// This function is responsible for managing the death behavior of the player.
-    /// </summary>
-    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
-    private IEnumerator Death()
-    {
-        PlayDeathSound();
-        GetComponent<Rigidbody2D>().AddForce(Vector2.up * 25, ForceMode2D.Impulse);
-        Time.timeScale = 0.2f;
-        screenBackground.color = new Color(1, 0, 0, 0.4f);
-        
-        MusicPlayer.Instance.PlayClip(MusicPlayer.Instance.startScreenClip);
-        yield return new WaitForSecondsRealtime(1.5f);
-        
-        screenBackground.color = Color.clear;
-        Time.timeScale = 1.0f;
-        Destroy(this);
-    }
-
-    /// <summary>
     /// This function is responsible for managing the healing behavior of the player.
     /// </summary>
     /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
@@ -253,8 +234,25 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-
-
+    /// <summary>
+    /// This function is responsible for managing the death behavior of the player.
+    /// </summary>
+    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
+    public IEnumerator Death()
+    {
+        PlayDeathSound();
+        GetComponent<Rigidbody2D>().AddForce(Vector2.up * 25, ForceMode2D.Impulse);
+        Time.timeScale = 0.2f;
+        screenBackground.color = new Color(1, 0, 0, 0.4f);
+        
+        MusicPlayer.Instance.PlayClip(MusicPlayer.Instance.startScreenClip);
+        yield return new WaitForSecondsRealtime(1.5f);
+        
+        screenBackground.color = Color.clear;
+        Time.timeScale = 1.0f;
+        Destroy(this);
+    }
+    
     /// <summary>
     /// This function is responsible for adding life to the player when taking power up.
     /// </summary>

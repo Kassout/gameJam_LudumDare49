@@ -24,6 +24,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private AudioSource _audioSource;
 
+    /// <summary>
+    /// Instance field <c>isStarted</c> represents the started status of the game party.
+    /// </summary>
+    private bool isStarted;
+
     #endregion
 
     #region MonoBehavior
@@ -42,8 +47,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (InputHandler.startInput)
+        if (InputHandler.startInput && !isStarted)
         {
+            isStarted = true;
             _audioSource.Play();
             StartCoroutine(StartGame());
         }

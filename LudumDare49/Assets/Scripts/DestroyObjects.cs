@@ -11,6 +11,13 @@ public class DestroyObjects : MonoBehaviour
     /// <param name="other">A Unity <c>Collider2D</c> component of the other game object involved in this collision.</param>
     private void OnTriggerExit2D(Collider2D other)
     {
-        Destroy(other.transform.gameObject);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            StartCoroutine(other.GetComponent<PlayerController>().Death());
+        }
+        else
+        {
+            Destroy(other.transform.gameObject);
+        }
     }
 }
