@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class MusicPlayer : MonoBehaviour
 {
+    #region Fields / Properties
+
     /// <summary>
-    /// Singleton instance.
+    /// Singleton instance property.
     /// </summary>
     public static MusicPlayer Instance { get; private set; }
 
@@ -41,7 +43,11 @@ public class MusicPlayer : MonoBehaviour
     /// Instance field <c>startScreenClip</c> is a Unity <c>AudioClip</c> structure representing the start screen sound clip.
     /// </summary>
     public AudioClip startScreenClip;
-    
+
+    #endregion
+
+    #region MonoBehavior
+
     /// <summary>
     /// This function is called when the script instance is being loaded.
     /// </summary>
@@ -62,43 +68,18 @@ public class MusicPlayer : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    /// <summary>
-    /// This function is responsible for switching audio clip currently playing.
-    /// </summary>
-    /// <param name="volumeTransition">A boolean value representing the volume transition status of the switching process of the music player.</param>
-    public void Switch(bool volumeTransition = true)
-    {
-        if(currentClip == lowIntensityClip)
-        {
-            StartCoroutine(PlaySound(highIntensityClip,false, volumeTransition));
-        }
-        else if (currentClip == highIntensityClip)
-        {
-            StartCoroutine(PlaySound(lowIntensityClip,true, volumeTransition));
-        }
-        else
-        {
-            StartCoroutine(PlaySound(lowIntensityClip,false, volumeTransition));
-        }
-    }
+    #endregion
 
-    /// <summary>
-    /// This function is responsible for playing a given audio clip.
-    /// </summary>
-    /// <param name="toPlay">A Unity <c>AudioClip</c> structure representing the audio clip to play by the music player.</param>
-    public void PlayClip(AudioClip toPlay)
-    {
-        StartCoroutine(PlaySound(toPlay,false));
-    }
+    #region Private
 
-    /// <summary>
+        /// <summary>
     /// This function is responsible for playing a given audio clip with or without transition audio clip and with or without volume transition.
     /// </summary>
     /// <param name="toPlay">A Unity <c>AudioClip</c> structure representing the audio clip to play by the music player.</param>
     /// <param name="transition">A boolean value representing the transition status of the audio clip.</param>
     /// <param name="volumeTransition">A boolean value representing the volume transition status of the audio clip.</param>
     /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
-    public IEnumerator PlaySound(AudioClip toPlay, bool transition, bool volumeTransition = true)
+    private IEnumerator PlaySound(AudioClip toPlay, bool transition, bool volumeTransition = true)
     {
         currentClip = toPlay;
         
@@ -153,4 +134,39 @@ public class MusicPlayer : MonoBehaviour
 
         yield return null;
     }
+
+    #endregion
+
+    #region Public
+
+    /// <summary>
+    /// This function is responsible for switching audio clip currently playing.
+    /// </summary>
+    /// <param name="volumeTransition">A boolean value representing the volume transition status of the switching process of the music player.</param>
+    public void Switch(bool volumeTransition = true)
+    {
+        if(currentClip == lowIntensityClip)
+        {
+            StartCoroutine(PlaySound(highIntensityClip,false, volumeTransition));
+        }
+        else if (currentClip == highIntensityClip)
+        {
+            StartCoroutine(PlaySound(lowIntensityClip,true, volumeTransition));
+        }
+        else
+        {
+            StartCoroutine(PlaySound(lowIntensityClip,false, volumeTransition));
+        }
+    }
+
+    /// <summary>
+    /// This function is responsible for playing a given audio clip.
+    /// </summary>
+    /// <param name="toPlay">A Unity <c>AudioClip</c> structure representing the audio clip to play by the music player.</param>
+    public void PlayClip(AudioClip toPlay)
+    {
+        StartCoroutine(PlaySound(toPlay,false));
+    }
+
+    #endregion
 }

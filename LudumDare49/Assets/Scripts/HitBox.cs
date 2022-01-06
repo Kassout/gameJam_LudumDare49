@@ -18,7 +18,7 @@ public class HitBox : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (collision.gameObject.GetComponent<PlayerController>()._canTakeDamage)
+            if (collision.gameObject.GetComponent<PlayerController>().canTakeDamage)
             {
                 collision.gameObject.GetComponent<PlayerController>().TakeDamage(1);
                 collision.gameObject.GetComponent<PlayerMovement>().Move(origin.directionOfPlayer.x * collision.gameObject.GetComponent<Rigidbody2D>().mass);

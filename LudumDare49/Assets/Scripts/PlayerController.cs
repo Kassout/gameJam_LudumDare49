@@ -4,107 +4,110 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// TODO: comments
+/// Class <c>PlayerController</c> is a Unity component script used to manage the general player behaviour.
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-    // Whether or not the player is grounded.
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    [HideInInspector] public bool isGrounded;
+    #region Fields / Properties
 
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>animator</c> is a Unity <c>Animator</c> component representing the player animations manager.
     /// </summary>
-    [SerializeField] public int life = 3;
+    private Animator _animator;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>spriteRenderer</c> is a Unity <c>SpriteRenderer</c> component representing the player sprite renderer.
     /// </summary>
+    private SpriteRenderer _spriteRenderer;
+    
+    /// <summary>
+    /// Instance field <c>audioSource</c> is a Unity <c>AudioSource</c> component representing the player audio source for SFX playing.
+    /// </summary>
+    private AudioSource _audioSource;
+    
+    /// <summary>
+    /// Instance field <c>hurtClip</c> is a Unity <c>AudioClip</c> object representing the player hurt audio sound.
+    /// </summary>
+    [SerializeField] private AudioClip hurtClip;
+    
+    /// <summary>
+    /// Instance field <c>deathClip</c> is a Unity <c>AudioClip</c> object representing the player death audio sound.
+    /// </summary>
+    [SerializeField] private AudioClip deathClip;
+
+    /// <summary>
+    /// Instance field <c>IsGroundedHash</c> represents the integer identifier of the string message "isGrounded" for the player animator.
+    /// </summary>
+    private static readonly int IsGroundedHash = Animator.StringToHash("isGrounded");
+    
+    /// <summary>
+    /// Instance field <c>maxLife</c> represents the maximum number of lives of the player.
+    /// </summary>
+    [Header("Player life parameters")]
     [SerializeField] private int maxLife = 5;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>life</c> represents the number of lives of the player.
     /// </summary>
-    [SerializeField] private float invicibilityDuration = 1.0f;
+    [SerializeField] private int life = 3;
     
     /// <summary>
-    /// TODO: comments
-    /// </summary>
-    [SerializeField] private GameObject lifeUI;
-    
-    // Radius of the overlap circle to determine if grounded
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    [SerializeField] private float groundedRadius = .2f; 
-    
-    // A mask determining what is ground to the character
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    [SerializeField] private LayerMask whatIsGround;
-    
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    [SerializeField] private Image screenBackground;
-    
-    // A position marking where to check if the player is grounded.
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    [SerializeField] private Transform groundCheckTransform;
-    
-    /// <summary>
-    /// TODO: comments
+    /// Instance field <c>lifePrefab</c> is a Unity <c>GameObject</c> representing the prefabricated life game object.
     /// </summary>
     [SerializeField] private GameObject lifePrefab;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>lifeUI</c> is a Unity <c>GameObject</c> representing the game life UI.
     /// </summary>
-    public bool _canTakeDamage = true;
+    [SerializeField] private GameObject lifeUI;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>screenBackground</c> is a Unity <c>Image</c> component representing the player death screen background.
     /// </summary>
-    public AudioClip hurtClip;
+    [SerializeField] private Image screenBackground;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>invincibilityDuration</c> represents the duration value of the player invincibility on hurt.
     /// </summary>
-    public AudioClip deathClip;
+    [SerializeField] private float invincibilityDuration = 1.0f;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>canTakeDamage</c> represents the can take damage status of the player.
     /// </summary>
-    private Animator _playerAnimator;
+    [HideInInspector] public bool canTakeDamage = true;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>groundCheckTransform</c> is a Unity <c>Transform</c> component representing the position, rotation and scale of the player game object ground check point.
     /// </summary>
-    private SpriteRenderer _playerSprite;
+    [Header("Player ground check parameters")]
+    [SerializeField] private Transform groundCheckTransform;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>whatIsGround</c> is a Unity <c>LayerMask</c> structure representing the ground layer in the scene.
     /// </summary>
-    private AudioSource _audioSource;
+    [SerializeField] private LayerMask whatIsGround;
+    
+    /// <summary>
+    /// Instance field <c>groundCheckRadius</c> represents the radius size value of the player ground check zone.
+    /// </summary>
+    [SerializeField] private float groundCheckRadius = 0.2f; 
+    
+    /// <summary>
+    /// Instance field <c>isGrounded</c> represents the grounded status of the player game object.
+    /// </summary>
+    [HideInInspector] public bool isGrounded;
 
-    // Cached property index
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
+    #endregion
+
+    #region MonoBehavior
 
     /// <summary>
     /// This function is called on the frame when a script is enabled just before any of the Update methods are called the first time.
     /// </summary>
     private void Start()
     {
-        _playerAnimator = GetComponent<Animator>();
-        _playerSprite = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
     }
 
@@ -114,28 +117,122 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         isGrounded = false;
-        _playerAnimator.SetBool(IsGrounded, isGrounded);
+        _animator.SetBool(IsGroundedHash, isGrounded);
         
-        // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
+        // The player is grounded if a circle cast to the ground check position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckTransform.position, groundedRadius, whatIsGround);
-        for (int i = 0; i < colliders.Length; i++)
+        if (Physics2D.OverlapCircle(groundCheckTransform.position, groundCheckRadius, whatIsGround))
         {
-            if (colliders[i].gameObject != gameObject)
-            {
-                isGrounded = true;
-                _playerAnimator.SetBool(IsGrounded, isGrounded);
-            }
+            isGrounded = true;
+            _animator.SetBool(IsGroundedHash, isGrounded);
         }
     }
     
     /// <summary>
-    /// TODO: comments
+    /// This function is called when the game shuts down, switches to another scene or when the related game object is destroyed.
     /// </summary>
-    /// <param name="damage">TODO: comments</param>
+    private void OnDestroy()
+    {
+        SceneManager.LoadScene(3);
+    }
+
+    #endregion
+
+    #region Private
+
+    /// <summary>
+    /// This function is responsible for playing the player hurt SFX when called.
+    /// </summary>
+    private void PlayHurtSound()
+    {
+        _audioSource.volume = 0.7f;
+        _audioSource.pitch = 1f;
+        _audioSource.clip = hurtClip;
+        _audioSource.Play();
+    }
+    
+    /// <summary>
+    /// This function is responsible for playing the player death SFX when called.
+    /// </summary>
+    private void PlayDeathSound()
+    {
+        _audioSource.volume = 0.7f;
+        _audioSource.pitch = 1f;
+        _audioSource.clip = deathClip;
+        _audioSource.Play();
+    }
+
+    /// <summary>
+    /// This function is responsible for managing the death behavior of the player.
+    /// </summary>
+    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
+    private IEnumerator Death()
+    {
+        PlayDeathSound();
+        GetComponent<Rigidbody2D>().AddForce(Vector2.up * 25, ForceMode2D.Impulse);
+        Time.timeScale = 0.2f;
+        screenBackground.color = new Color(1, 0, 0, 0.4f);
+        
+        MusicPlayer.Instance.PlayClip(MusicPlayer.Instance.startScreenClip);
+        yield return new WaitForSecondsRealtime(1.5f);
+        
+        screenBackground.color = Color.clear;
+        Time.timeScale = 1.0f;
+        Destroy(this);
+    }
+
+    /// <summary>
+    /// This function is responsible for managing the healing behavior of the player.
+    /// </summary>
+    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
+    private IEnumerator Heal()
+    {
+        Transform lastChild = lifeUI.transform.GetChild(lifeUI.transform.childCount - 1);
+        GameObject lifeObject = Instantiate(lifePrefab, lifePrefab.transform.position, Quaternion.identity);
+        lifeObject.transform.SetParent(lifeUI.transform);
+        RectTransform UIPosition = lifeObject.GetComponent<RectTransform>(); 
+        UIPosition.localPosition = Vector3.zero;
+        UIPosition.anchoredPosition =
+            new Vector2(lastChild.GetComponent<RectTransform>().anchoredPosition.x - 80.0f, 0);
+        yield return null;
+    }
+
+    /// <summary>
+    /// This function is responsible for managing the invincibility behavior of the player.
+    /// </summary>
+    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
+    private IEnumerator Invincibility()
+    {
+        canTakeDamage = false;
+        PlayHurtSound();
+        Color normalColor = Color.white;
+        Color hitColor = Color.clear;
+
+        for (int i = 0; i < invincibilityDuration / 0.2f; i++)
+        {
+            Material material = _spriteRenderer.material;
+            material.color = hitColor;
+            yield return new WaitForSeconds(0.1f);
+            material.color = normalColor;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        yield return null;
+        _spriteRenderer.material.color = normalColor;
+        canTakeDamage = true;
+    }
+    
+    #endregion
+
+    #region Public
+
+    /// <summary>
+    /// This function is responsible for subtracting life of the player when taking damage.
+    /// </summary>
+    /// <param name="damage">An integer value representing the quantity of damage received by the player.</param>
     public void TakeDamage(int damage)
     {
-        if (_canTakeDamage)
+        if (canTakeDamage)
         {
             if (life - damage > 0)
             {
@@ -156,51 +253,12 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    private void PlayHurtSound()
-    {
-        _audioSource.volume = 0.7f;
-        _audioSource.pitch = 1f;
-        _audioSource.clip = hurtClip;
-        _audioSource.Play();
-    }
-    
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    private void PlayDeathSound()
-    {
-        _audioSource.volume = 0.7f;
-        _audioSource.pitch = 1f;
-        _audioSource.clip = deathClip;
-        _audioSource.Play();
-    }
+
 
     /// <summary>
-    /// TODO: comments
+    /// This function is responsible for adding life to the player when taking power up.
     /// </summary>
-    /// <returns>TODO: comments</returns>
-    private IEnumerator Death()
-    {
-        PlayDeathSound();
-        GetComponent<Rigidbody2D>().AddForce(Vector2.up * 25, ForceMode2D.Impulse);
-        Time.timeScale = 0.2f;
-        screenBackground.color = new Color(1, 0, 0, 0.4f);
-        
-        MusicPlayer.Instance.PlayClip(MusicPlayer.Instance.startScreenClip);
-        yield return new WaitForSecondsRealtime(1.5f);
-        
-        screenBackground.color = Color.clear;
-        Time.timeScale = 1.0f;
-        Destroy(this);
-    }
-
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    /// <param name="heal">TODO: comments</param>
+    /// <param name="heal">An integer value representing the quantity of heal received by the player.</param>
     public void TakePowerUp(int heal)
     {
         if (life + heal <= maxLife)
@@ -213,51 +271,5 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    /// <returns>TODO: comments</returns>
-    private IEnumerator Heal()
-    {
-        Transform lastChild = lifeUI.transform.GetChild(lifeUI.transform.childCount - 1);
-        GameObject lifeObject = Instantiate(lifePrefab, lifePrefab.transform.position, Quaternion.identity);
-        lifeObject.transform.SetParent(lifeUI.transform);
-        RectTransform UIPosition = lifeObject.GetComponent<RectTransform>(); 
-        UIPosition.localPosition = Vector3.zero;
-        UIPosition.anchoredPosition =
-            new Vector2(lastChild.GetComponent<RectTransform>().anchoredPosition.x - 80.0f, 0);
-        yield return null;
-    }
-
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    /// <returns>TODO: comments</returns>
-    private IEnumerator Invincibility()
-    {
-        _canTakeDamage = false;
-        PlayHurtSound();
-        Color normalColor = Color.white;
-        Color hitColor = Color.clear;
-
-        for (int i = 0; i < invicibilityDuration / 0.2f; i++)
-        {
-            _playerSprite.material.color = hitColor;
-            yield return new WaitForSeconds(0.1f);
-            _playerSprite.material.color = normalColor;
-            yield return new WaitForSeconds(0.1f);
-        }
-
-        yield return null;
-        _playerSprite.material.color = normalColor;
-        _canTakeDamage = true;
-    }
-
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    private void OnDestroy()
-    {
-        SceneManager.LoadScene(3);
-    }
+    #endregion
 }

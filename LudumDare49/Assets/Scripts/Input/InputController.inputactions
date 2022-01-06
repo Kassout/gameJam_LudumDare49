@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Jump",
+                    "name": "Start",
                     "type": "Button",
                     "id": "e4b04f05-6f7b-40cc-a443-86b320c3f72c",
                     "expectedControlType": "Button",
@@ -38,7 +38,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "Jump",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -49,7 +49,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Jump",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

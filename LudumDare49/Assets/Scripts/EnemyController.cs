@@ -17,6 +17,11 @@ public class EnemyController : MonoBehaviour
     private GameObject _player;
     
     /// <summary>
+    /// Instance field <c>hitBoxInstance</c> is a Unity <c>GameObject</c> representing the hit box instance of the enemy.
+    /// </summary>
+    private GameObject _hitBoxInstance;
+    
+    /// <summary>
     /// Instance field <c>enemyRigidbody</c> is a Unity <c>Rigidbody2D</c> component representing the enemy game object rigidbody.
     /// </summary>
     private Rigidbody2D _enemyRigidbody;
@@ -37,9 +42,14 @@ public class EnemyController : MonoBehaviour
     private AudioSource _audioSource;
     
     /// <summary>
-    /// Instance field <c>hitBoxInstance</c> is a Unity <c>GameObject</c> representing the hit box instance of the enemy.
+    /// Instance field <c>attackClip</c> is a Unity <c>AudioClip</c> object representing the enemy attack audio sound.
     /// </summary>
-    private GameObject _hitBoxInstance;
+    [SerializeField] private AudioClip attackClip;
+    
+    /// <summary>
+    /// Instance field <c>hurtClip</c> is a Unity <c>AudioClip</c> object representing the enemy hurt audio sound.
+    /// </summary>
+    [SerializeField] private AudioClip hurtClip;
     
     /// <summary>
     /// Instance field <c>IsGroundedHash</c> represents the integer identifier of the string message "isGrounded" for the enemy animator.
@@ -60,17 +70,7 @@ public class EnemyController : MonoBehaviour
     /// Instance field <c>DeathHash</c> represents the integer identifier of the string message "death" for the enemy animator.
     /// </summary>
     private static readonly int DeathHash = Animator.StringToHash("death");
-    
-    /// <summary>
-    /// Instance field <c>attackClip</c> is a Unity <c>AudioClip</c> object representing the enemy attack audio sound.
-    /// </summary>
-    [SerializeField] private AudioClip attackClip;
-    
-    /// <summary>
-    /// Instance field <c>hurtClip</c> is a Unity <c>AudioClip</c> object representing the enemy hurt audio sound.
-    /// </summary>
-    [SerializeField] private AudioClip hurtClip;
-    
+
     /// <summary>
     /// Instance field <c>groundCheckTransform</c> is a Unity <c>Transform</c> component representing the position, rotation and scale of the point checking the enemy grounded status.
     /// </summary>
@@ -152,7 +152,7 @@ public class EnemyController : MonoBehaviour
     /// <summary>
     /// Instance field <c>life</c> represents the number of lives of the enemy.
     /// </summary>
-    [Header("Global parameters")]
+    [Header("General parameters")]
     [SerializeField] private int life = 1;
     
     /// <summary>

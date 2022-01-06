@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (InputHandler.jumpInput)
+        if (InputHandler.startInput)
         {
             _audioSource.Play();
             StartCoroutine(StartGame());

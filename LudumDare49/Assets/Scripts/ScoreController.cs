@@ -3,35 +3,41 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// TODO: comments
+/// Class <c>ScoreController</c> is a Unity component script used to manage the score computation behavior.
 /// </summary>
 public class ScoreController : MonoBehaviour
 {
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    [SerializeField] private float scoreDelay = 10.0f;
-    
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    [SerializeField] private int scoreIncrement = 10;
-    
-    /// <summary>
-    /// TODO: comments
-    /// </summary>
-    [SerializeField] private float timeUntilScoreIncrementIncrease = 30.0f;
+    #region Fields / Properties
 
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>scoreUI</c> is a Unity <c>Text</c> component representing the score UI game object.
     /// </summary>
     private Text _scoreUI;
     
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>naturalScoreGrowthTickDelay</c> represents the duration between two natural score growth.
     /// </summary>
-    private int _score = 0;
+    [SerializeField] private float naturalScoreGrowthTickDelay = 5.0f;
     
+    /// <summary>
+    /// Instance field <c>naturalScoreGrowthIncrement</c> represents the natural increment value of the score at each score delay tick.
+    /// </summary>
+    [SerializeField] private int naturalScoreGrowthIncrement = 10;
+    
+    /// <summary>
+    /// Instance field <c>timeUntilScoreIncrementIncrease</c> represents the duration value between two score growth increment increase.
+    /// </summary>
+    [SerializeField] private float timeUntilScoreIncrementIncrease = 30.0f;
+
+    /// <summary>
+    /// Instance field <c>score</c> represents the actual player score.
+    /// </summary>
+    private int _score;
+
+    #endregion
+
+    #region MonoBehavior
+
     /// <summary>
     /// This function is called on the frame when a script is enabled just before any of the Update methods are called the first time.
     /// </summary>
@@ -39,15 +45,19 @@ public class ScoreController : MonoBehaviour
     {
         _scoreUI = GetComponent<Text>();
 
-        StartCoroutine(ComputeScore(scoreDelay));
+        StartCoroutine(ComputeScore(naturalScoreGrowthTickDelay));
         StartCoroutine(ScoreUpdate());
     }
 
+    #endregion
+
+    #region Private
+
     /// <summary>
-    /// TODO: comments
+    /// This function is responsible for managing the score computation behavior.
     /// </summary>
-    /// <param name="scoreIncreaseDelay">TODO: comments</param>
-    /// <returns>TODO: comments</returns>
+    /// <param name="scoreIncreaseDelay">A float value representing the duration between to score increment computation.</param>
+    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
     private IEnumerator ComputeScore(float scoreIncreaseDelay)
     {
         float scoreIncrementCountdown = timeUntilScoreIncrementIncrease;
@@ -63,22 +73,22 @@ public class ScoreController : MonoBehaviour
             if (scoreCountDown < 0)
             {
                 scoreCountDown += scoreIncreaseDelay;
-                _score += scoreIncrement;
+                _score += naturalScoreGrowthIncrement;
             }
             
             // Should the score increment increase ?
             if (scoreIncrementCountdown < 0 && scoreIncreaseDelay > 1)
             {
                 scoreIncrementCountdown += timeUntilScoreIncrementIncrease;
-                scoreIncrement *= 2;
+                naturalScoreGrowthIncrement *= 2;
             }
         }
     }
 
     /// <summary>
-    /// TODO: comments
+    /// This function is responsible for manager the score updating behavior on display.
     /// </summary>
-    /// <returns>TODO: comments</returns>
+    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
     private IEnumerator ScoreUpdate()
     {
         int displayScore = int.Parse(_scoreUI.text.Split(':')[1]);
@@ -101,14 +111,20 @@ public class ScoreController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Public
+
     /// <summary>
-    /// TODO: comments
+    /// This function is responsible for managing the adding score behavior.
     /// </summary>
-    /// <param name="amount">TODO: comments</param>
-    /// <returns>TODO: comments</returns>
+    /// <param name="amount">An integer value representing the point quantity to add to the current score.</param>
+    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
     public IEnumerator AddScore(int amount)
     {
         _score += amount;
         yield return null;
     }
+
+    #endregion
 }

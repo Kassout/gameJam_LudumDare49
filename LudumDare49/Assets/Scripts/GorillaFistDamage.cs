@@ -29,7 +29,7 @@ public class GorillaFistDamage : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (collision.gameObject.GetComponent<PlayerController>()._canTakeDamage)
+            if (collision.gameObject.GetComponent<PlayerController>().canTakeDamage)
             {
                 collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
                 collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * forceAmplitude, ForceMode2D.Impulse);

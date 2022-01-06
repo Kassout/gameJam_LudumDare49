@@ -2,14 +2,20 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// TODO: comments
+/// Class <c>PowerUpController</c> is a Unity component script used to manage the power up behavior.
 /// </summary>
 public class PowerUpController : MonoBehaviour
 {
+    #region Fields / Properties
+
     /// <summary>
-    /// TODO: comments
+    /// Instance field <c>audioSource</c> is a Unity <c>AudioSource</c> component representing the power up audio source for SFX playing.
     /// </summary>
     private AudioSource _audioSource;
+
+    #endregion
+
+    #region MonoBehavior
 
     /// <summary>
     /// This function is called on the frame when a script is enabled just before any of the Update methods are called the first time.
@@ -31,19 +37,26 @@ public class PowerUpController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Private
+
     /// <summary>
-    /// TODO: comments
+    /// This function is responsible for managing the collect power up behavior.
     /// </summary>
-    /// <param name="player">TODO: comments</param>
-    /// <returns>TODO: comments</returns>
+    /// <param name="player">A Unity <c>GameObject</c> representing the player game object.</param>
+    /// <returns>A <c>IEnumerator</c> interface representing a list of controls regarding the iteration of the list of current running/called coroutine functions.</returns>
     private IEnumerator CollectPowerUp(GameObject player)
     {
         _audioSource.Play();
         player.GetComponent<PlayerController>().TakePowerUp(1);
-        gameObject.GetComponent<SpriteRenderer>().sprite = null;
+        GameObject powerUpGameObject;
+        (powerUpGameObject = gameObject).GetComponent<SpriteRenderer>().sprite = null;
 
         yield return new WaitForSeconds(0.15f);
         
-        Destroy(gameObject);
+        Destroy(powerUpGameObject);
     }
+
+    #endregion
 }

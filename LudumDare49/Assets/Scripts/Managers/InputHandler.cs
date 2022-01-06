@@ -18,7 +18,7 @@ public class InputHandler : MonoBehaviour
     /// <summary>
     /// Instance variable <c>jumpInput</c> represents the jump hold input status of the game.
     /// </summary>
-    public static bool jumpInput;
+    public static bool startInput;
     
     /// <summary>
     /// Instance variable <c>attackInput</c> represents the attack input status of the game.
@@ -36,7 +36,7 @@ public class InputHandler : MonoBehaviour
             
             _inputController.Player.Movement.performed += _ => movementInput = _.ReadValue<float>();
 
-            _inputController.Player.Jump.performed += _ => jumpInput = true;
+            _inputController.Player.Start.performed += _ => startInput = true;
             _inputController.Player.Attack.performed += _ => attackInput = true;
         }
         
@@ -57,7 +57,7 @@ public class InputHandler : MonoBehaviour
     private void LateUpdate()
     {
         // To avoid calling input related methods twice in a frame.
-        jumpInput = false;
+        startInput = false;
         attackInput = false;
     }
 }

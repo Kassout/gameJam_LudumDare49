@@ -15377,13 +15377,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1371036928}
   - component: {fileID: 1371036927}
-  - component: {fileID: 1371036930}
-  - component: {fileID: 1371036926}
-  - component: {fileID: 1371036929}
   - component: {fileID: 1371036925}
   - component: {fileID: 1371036924}
   - component: {fileID: 1371036923}
   - component: {fileID: 1371036931}
+  - component: {fileID: 1371036930}
+  - component: {fileID: 1371036926}
+  - component: {fileID: 1371036929}
   - component: {fileID: 1371036932}
   m_Layer: 6
   m_Name: Player
@@ -15460,14 +15460,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f7f175714ff7324f848352567844814, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 40
-  jumpForce: 600
-  jumpBoost: 0.5
-  jumpTime: 0
-  airControl: 1
-  movementSmoothing: 0.05
   walkClip: {fileID: 8300000, guid: db860009383d13c49b7458abe26eabb5, type: 3}
   jumpClip: {fileID: 8300000, guid: 0fab2d18fc8cb0e47ae62a32155b6dd5, type: 3}
+  movementSpeed: 40
+  movementSmoothing: 0.05
+  jumpForce: 600
+  jumpBoost: 0.5
+  jumpTime: 0.15
+  airControl: 1
 --- !u!212 &1371036927
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15549,16 +15549,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54d5432d7812f54394cd71926216a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackClip: {fileID: 8300000, guid: 0251b4ed1f422c3489404d7bd345678b, type: 3}
+  scoreUI: {fileID: 1387735186}
   damage: 1
   attackRangeX: 1
   attackRangeY: 1
-  attackPos: {fileID: 1214419284}
-  startTimeBtwAttack: 0.7
+  attackPosition: {fileID: 1214419284}
+  attackCooldownTime: 0.7
   whatIsEnemies:
     serializedVersion: 2
     m_Bits: 8
-  scoreUI: {fileID: 1387735186}
-  attackClip: {fileID: 8300000, guid: 0251b4ed1f422c3489404d7bd345678b, type: 3}
 --- !u!114 &1371036930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15571,21 +15571,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46bd41f1a6c9e146b45ba14f0ee473b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
-  life: 3
-  maxLife: 5
-  invicibilityDuration: 1
-  lifeUI: {fileID: 1588318277}
-  groundedRadius: 0.2
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 257
-  screenBackground: {fileID: 1594766172}
-  groundCheckTransform: {fileID: 1309869335}
-  lifePrefab: {fileID: 7406768447180664273, guid: 54bc284caa02e8b409d40ba8d5f156bf, type: 3}
-  _canTakeDamage: 1
   hurtClip: {fileID: 8300000, guid: 8d18c63fc721a0e4cbe4c8e15a9c5528, type: 3}
   deathClip: {fileID: 8300000, guid: d1437a9962f09af4c9de31ab086e1364, type: 3}
+  maxLife: 5
+  life: 3
+  lifePrefab: {fileID: 7406768447180664273, guid: 54bc284caa02e8b409d40ba8d5f156bf, type: 3}
+  lifeUI: {fileID: 1588318277}
+  screenBackground: {fileID: 1594766172}
+  invincibilityDuration: 1
+  canTakeDamage: 1
+  groundCheckTransform: {fileID: 1309869335}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 256
+  groundCheckRadius: 0.2
+  isGrounded: 0
 --- !u!82 &1371036931
 AudioSource:
   m_ObjectHideFlags: 0
