@@ -219,7 +219,7 @@ public class EnemyController : MonoBehaviour
         {
             if (_isGrounded)
             {
-                if (!_collidingWithAura)
+                if (!_collidingWithAura && !attacking)
                 {
                     // Move the character by finding the target velocity
                     Vector2 velocity = _enemyRigidbody.velocity;
