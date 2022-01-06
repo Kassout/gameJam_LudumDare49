@@ -182,7 +182,7 @@ public class EnemyController : MonoBehaviour
         _attackCooldownTimeValue = attackCooldownTime;
         
 #if !UNITY_EDITOR
-        hitBox.GetComponent<SpriteRenderer>().enabled = false;
+        hitBoxPrefab.GetComponent<SpriteRenderer>().enabled = false;
 #endif
     }
 
