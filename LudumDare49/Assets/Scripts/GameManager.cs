@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (InputHandler.startInput && !isStarted)
+        if ((Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame) && !isStarted)
         {
             isStarted = true;
             _audioSource.Play();

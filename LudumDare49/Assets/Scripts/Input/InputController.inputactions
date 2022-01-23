@@ -14,14 +14,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Start",
-                    "type": "Button",
-                    "id": "e4b04f05-6f7b-40cc-a443-86b320c3f72c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Attack",
                     "type": "Button",
                     "id": "e8b1d6fd-e804-432c-b05b-e26b5acc3dfb",
@@ -31,28 +23,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "664c00c6-8523-4fa5-9313-087c3480ddee",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Start",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "577442cb-5e6b-4ac6-a183-90e3f7d1c4af",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Start",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "AD",
                     "id": "d99760e4-74b2-4007-9115-867843306818",

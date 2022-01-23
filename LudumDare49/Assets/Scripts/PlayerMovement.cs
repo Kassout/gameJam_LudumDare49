@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -111,6 +112,8 @@ public class PlayerMovement : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
+    private bool keyspaceIsPressed;
+    
     /// <summary>
     /// This function is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
@@ -120,14 +123,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (_playerController.isGrounded)
         {
-            if (Keyboard.current.spaceKey.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame)
+            if ((Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame) || (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame))
             {
                 _playerController.isGrounded = false;
                 _rigidbody.AddForce(Vector2.up * jumpForce);
                 PlayJumpSound();
                 _isJumping = true;
             }
-            else if (!Keyboard.current.spaceKey.isPressed || !Gamepad.current.buttonSouth.isPressed)
+            else if ((Keyboard.current != null && !Keyboard.current.spaceKey.isPressed) || (Gamepad.current != null && !Gamepad.current.buttonSouth.isPressed))
             {
                 _isJumping = false;
                 _jumpTimeCounter = jumpTime;
@@ -145,6 +148,15 @@ public class PlayerMovement : MonoBehaviour
         else if (!_playerController.isGrounded || _horizontalMove == 0 || _isJumping)
         {
             _animator.SetBool(IsWalkingHash, false);
+        }
+
+        if ((Keyboard.current != null && !Keyboard.current.spaceKey.isPressed) || (Gamepad.current != null && !Gamepad.current.buttonSouth.isPressed))
+        {
+            keyspaceIsPressed = true;
+        }
+        else
+        {
+            keyspaceIsPressed = false;
         }
     }
 
@@ -234,7 +246,7 @@ public class PlayerMovement : MonoBehaviour
         // If the player should continue to jump...
         if (_isJumping)
         {
-            if (Keyboard.current.spaceKey.isPressed || Gamepad.current.buttonSouth.isPressed)
+            if (keyspaceIsPressed)
             {
                 if (_jumpTimeCounter > 0)
                 {
